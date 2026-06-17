@@ -169,11 +169,43 @@ SKScene.didFinishUpdate
 ## 6. Trạng thái triển khai
 
 - [x] Spec viết xong (file này)
-- [ ] Chốt Open Questions với user
-- [ ] Viết implementation plan cho Sprint 1 (skill `writing-plans`)
-- [ ] Code Sprint 1
+- [x] Chốt Open Questions với user (xem 6.1)
+- [x] Code Sprint 1 — scaffold + gameplay (build & run OK trên simulator iPhone 16)
+- [x] Unit test Sprint 1 — 31 tests pass (InputState, LevelLoader, Player, GoombaEnemy)
+- [ ] Test trên 1 device thật (iPhone + iPad) → đóng Sprint 1
 - [ ] Sprint 1 done → mở Sprint 2 spec
 - [ ] ... → Sprint 4 → Submit App Store
+
+### 6.1 Open Questions đã chốt (2026-06-17)
+1. **IP/Asset path:** (C) **rectangle placeholder** trước — player đỏ, enemy nâu, ground xám, brick cam, coin vàng. Quyết IP/art thật sau.
+2. **Min iOS:** **iOS 17.0**.
+3. **Bundle ID:** tạm `com.example.mario`, team signing để trống (chạy simulator). Đổi trước khi submit.
+4. **Asset source:** rectangle placeholder (không asset ngoài) cho Sprint 1.
+5. **Level format:** **JSON tự định nghĩa** — ASCII grid (`G/#` solid, `P` player, `E` enemy, `C` coin, `F` flag). File `mario/Levels/level-1-1.json`.
+6. **Game Center/IAP:** ngoài scope Sprint 1.
+7. **Dev:** single dev.
+
+### 6.2 Sprint 1 đã implement
+- Xcode project SpriteKit scaffold (SwiftUI `@main` + `SpriteView`), landscape-only, iPhone+iPad (`TARGETED_DEVICE_FAMILY 1,2`).
+- `Player` state machine (idle/run/jump/fall/dead), velocity-based jump, gravity, collision ground.
+- `LevelLoader` parse JSON ASCII grid → tilemap + spawn points.
+- Camera follow + clamp biên level.
+- `GoombaEnemy` patrol theo bounds; stomp để giết, chạm hông → player chết.
+- HUD coin + life; coin pickup (+1).
+- `TouchControls` D-pad ◀▶ + nút A (đa chạm, đi + nhảy cùng lúc), child của camera.
+- Game over (rơi xuống hố / chạm enemy) → restart; hết mạng → chạm chơi lại.
+- Flag cuối màn → "YOU WIN" overlay → restart.
+
+**Build:** `xcodebuild -project mario.xcodeproj -scheme mario -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16'` → BUILD SUCCEEDED, launch không crash.
+
+### 6.3 Unit test (target `marioTests`, 31 tests pass)
+- `InputStateTests` (5) — merge trái/phải, cancel-out, equatable.
+- `LevelLoaderTests` (8) — parse JSON, quy đổi toạ độ row/col→world, đếm spawn, solid tile có physics, JSON lỗi throw.
+- `PlayerTests` (11) — state machine idle/run/jump/fall/dead, không nhảy trên không, không double-jump, bounce, dead bỏ qua input.
+- `GoombaEnemyTests` (7) — patrol hướng, đảo hướng tại biên + khi bị chặn, stomp idempotent, dead no-op.
+- Chạy: `xcodebuild test -project mario.xcodeproj -scheme mario -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 16'`
+
+**Còn lại để đóng Sprint 1:** test device thật (iPhone + iPad), tinh chỉnh cảm giác nhảy/tốc độ.
 
 ---
 
