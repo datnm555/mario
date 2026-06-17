@@ -9,14 +9,22 @@ enum PlayerState {
 final class Player: SKSpriteNode {
 
     // Tuning (velocity-based → deterministic, không phụ thuộc mass)
-    private let moveSpeed: CGFloat = 230
-    private let jumpVelocity: CGFloat = 700
-    private let maxFallSpeed: CGFloat = -1000
+    private let moveSpeed: CGFloat = 240
+    private let jumpVelocity: CGFloat = 760
+    private let maxFallSpeed: CGFloat = -1100
+    /// Hệ số cắt độ cao nhảy khi thả nút sớm (variable jump height).
+    private let jumpCutFactor: CGFloat = 0.45
+    /// Cho phép nhảy trong khoảng này sau khi rời mép (coyote time).
+    private let coyoteTime: TimeInterval = 0.10
+    /// Bấm nhảy sớm trước khi chạm đất vẫn được ghi nhận (jump buffering).
+    private let jumpBufferTime: TimeInterval = 0.12
 
     private(set) var state: PlayerState = .idle
     var isOnGround = false
     private var wasJumpHeld = false
     private(set) var isDead = false
+    private var coyoteTimer: TimeInterval = 0
+    private var jumpBufferTimer: TimeInterval = 0
 
     static let bodySize = CGSize(width: 28, height: 30)
 
@@ -53,11 +61,33 @@ final class Player: SKSpriteNode {
         // Di chuyển ngang: set velocity.x trực tiếp (control chặt như platformer cổ điển).
         body.velocity.dx = input.horizontal * moveSpeed
 
-        // Nhảy: chỉ khi đang đứng đất + cạnh lên của nút jump.
+        // Đếm ngược coyote time: nạp đầy khi đứng đất, cạn dần khi trên không.
+        if isOnGround {
+            coyoteTimer = coyoteTime
+        } else {
+            coyoteTimer = max(0, coyoteTimer - dt)
+        }
+
+        // Jump buffer: nạp khi có cạnh lên của nút jump, cạn dần theo thời gian.
         let jumpEdge = input.jumpHeld && !wasJumpHeld
-        if jumpEdge && isOnGround {
+        if jumpEdge {
+            jumpBufferTimer = jumpBufferTime
+        } else {
+            jumpBufferTimer = max(0, jumpBufferTimer - dt)
+        }
+
+        // Nhảy khi: có buffer chờ + còn coyote credit.
+        if jumpBufferTimer > 0 && coyoteTimer > 0 {
             body.velocity.dy = jumpVelocity
             isOnGround = false
+            coyoteTimer = 0
+            jumpBufferTimer = 0
+        }
+
+        // Variable jump height: thả nút khi đang lên → cắt bớt lực nhảy.
+        let jumpReleased = !input.jumpHeld && wasJumpHeld
+        if jumpReleased && body.velocity.dy > 0 {
+            body.velocity.dy *= jumpCutFactor
         }
         wasJumpHeld = input.jumpHeld
 

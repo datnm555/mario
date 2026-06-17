@@ -107,4 +107,49 @@ final class PlayerTests: XCTestCase {
         XCTAssertGreaterThan(p.physicsBody!.velocity.dy, 0)
         XCTAssertFalse(p.isOnGround)
     }
+
+    // MARK: - Game feel (coyote time, jump buffer, variable jump height)
+
+    func testCoyoteTimeAllowsLateJump() {
+        let p = Player()
+        p.isOnGround = true
+        p.update(input: InputState(), dt: 1.0 / 60)   // nạp coyote credit
+        p.isOnGround = false                           // vừa rời mép
+        var jump = InputState(); jump.jumpHeld = true
+        p.update(input: jump, dt: 0.05)                // 0.05s sau, vẫn trong coyote window
+        XCTAssertGreaterThan(p.physicsBody!.velocity.dy, 0, "Nhảy được ngay sau khi rời mép")
+    }
+
+    func testNoJumpAfterCoyoteExpires() {
+        let p = Player()
+        p.isOnGround = true
+        p.update(input: InputState(), dt: 1.0 / 60)
+        p.isOnGround = false
+        p.update(input: InputState(), dt: 0.2)         // quá coyote window
+        var jump = InputState(); jump.jumpHeld = true
+        p.update(input: jump, dt: 0.05)
+        XCTAssertEqual(p.physicsBody!.velocity.dy, 0, "Hết coyote → không nhảy")
+    }
+
+    func testJumpBufferTriggersOnLanding() {
+        let p = Player()
+        p.isOnGround = false
+        var jump = InputState(); jump.jumpHeld = true
+        p.update(input: jump, dt: 1.0 / 60)            // bấm sớm khi còn trên không
+        XCTAssertEqual(p.physicsBody!.velocity.dy, 0, "Chưa chạm đất thì chưa nhảy")
+        p.isOnGround = true
+        p.update(input: jump, dt: 0.05)                // chạm đất, buffer vẫn còn → nhảy
+        XCTAssertGreaterThan(p.physicsBody!.velocity.dy, 0, "Buffer kích hoạt khi vừa chạm đất")
+    }
+
+    func testVariableJumpHeightCut() {
+        let p = Player()
+        p.isOnGround = true
+        var jump = InputState(); jump.jumpHeld = true
+        p.update(input: jump, dt: 1.0 / 60)            // nhảy full lực
+        let full = p.physicsBody!.velocity.dy
+        p.update(input: InputState(), dt: 1.0 / 60)    // thả nút khi đang lên → cắt
+        XCTAssertLessThan(p.physicsBody!.velocity.dy, full, "Thả sớm → nhảy thấp hơn")
+        XCTAssertGreaterThan(p.physicsBody!.velocity.dy, 0)
+    }
 }
