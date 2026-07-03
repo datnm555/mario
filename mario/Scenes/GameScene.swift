@@ -148,7 +148,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let input = touchControls.state
         player.update(input: input, dt: dt)
-        if player.justJumped { AudioManager.shared.play(.jump) }
+        if player.justJumped { AudioManager.shared.play(.jump); HapticManager.shared.play(.light) }
         for e in enemies { e.update(dt: dt) }
         for m in mushrooms { m.update(dt: dt) }
         for f in fireballs { f.update(dt: dt) }
@@ -236,6 +236,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             if let coin = coinNode, coin.collect() {
                 coins += 1
                 AudioManager.shared.play(.coin)
+                HapticManager.shared.play(.selection)
             }
             return
         }
@@ -331,9 +332,11 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             player.grow()
             mushrooms.removeAll { $0 === m }
             AudioManager.shared.play(.powerup)
+            HapticManager.shared.play(.success)
         } else if let w = node as? FireFlower, w.collect() {
             player.becomeFire()
             AudioManager.shared.play(.powerup)
+            HapticManager.shared.play(.success)
         }
     }
 
@@ -362,6 +365,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         if playerBottom >= enemyTop - 10 && falling {
             AudioManager.shared.play(.stomp)
+            HapticManager.shared.play(.medium)
             if enemy.onStompFromAbove() { player.bounce() }
         } else {
             let hurts = enemy.onSideContact(playerX: player.position.x)
@@ -391,6 +395,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         gameState = .lost
         AudioManager.shared.stopBGM()
         AudioManager.shared.play(.death)
+        HapticManager.shared.play(.heavy)
 
         if lives > 0 {
             showMessage("Ối! Còn \(lives) mạng", color: .white, autoFade: true)

@@ -24,8 +24,13 @@ final class MenuScene: SKScene {
         addChild(subtitle)
 
         let play = ButtonNode(id: "play", text: "▶  CHƠI", size: CGSize(width: 260, height: 72))
-        play.position = CGPoint(x: 0, y: -30)
+        play.position = CGPoint(x: 0, y: -20)
         addChild(play)
+
+        let settings = ButtonNode(id: "settings", text: "⚙  Cài đặt", size: CGSize(width: 220, height: 54),
+                                  fill: SKColor(red: 0.30, green: 0.40, blue: 0.60, alpha: 1))
+        settings.position = CGPoint(x: 0, y: -96)
+        addChild(settings)
 
         let coins = SKLabelNode(fontNamed: "AvenirNext-Bold")
         coins.text = "🪙 tổng: \(progress.totalCoins)"
@@ -39,8 +44,11 @@ final class MenuScene: SKScene {
         guard let t = touches.first,
               let button = tappedButton(at: t.location(in: self)) else { return }
         button.flash()
-        if button.id == "play" {
-            SceneRouter.goLevelSelect(from: self)
+        HapticManager.shared.play(.selection)
+        switch button.id {
+        case "play":     SceneRouter.goLevelSelect(from: self)
+        case "settings": SceneRouter.goSettings(from: self)
+        default:         break
         }
     }
 }

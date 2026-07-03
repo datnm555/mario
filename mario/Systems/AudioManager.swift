@@ -5,26 +5,25 @@ enum SoundEffect: String, CaseIterable {
     case jump, coin, stomp, powerup, fireball, death, brick, win
 }
 
-/// Quản lý BGM + SFX. Preload player để phát không trễ. Tôn trọng cờ bật/tắt (lưu UserDefaults).
+/// Quản lý BGM + SFX. Preload player để phát không trễ.
+/// Cờ bật/tắt + âm lượng đọc từ SettingsStore (nguồn duy nhất).
 final class AudioManager {
 
     static let shared = AudioManager()
 
-    private static let enabledKey = "audio.enabled"
-    private let store: KeyValueStore
+    private let settings: SettingsStore
     private var players: [SoundEffect: AVAudioPlayer] = [:]
     private var bgmPlayer: AVAudioPlayer?
 
-    private(set) var isEnabled: Bool
-
-    init(store: KeyValueStore = UserDefaults.standard, preload: Bool = true) {
-        self.store = store
-        self.isEnabled = (store.object(forKey: AudioManager.enabledKey) as? Bool) ?? true
+    init(settings: SettingsStore = .shared, preload: Bool = true) {
+        self.settings = settings
         if preload {
             configureSession()
             preloadEffects()
         }
     }
+
+    var isEnabled: Bool { settings.audioEnabled }
 
     private func configureSession() {
         // .ambient: game audio, tôn trọng nút gạt im lặng, không ngắt nhạc app khác.
@@ -47,20 +46,21 @@ final class AudioManager {
     // MARK: - Playback
 
     func play(_ effect: SoundEffect) {
-        guard isEnabled, let player = players[effect] else { return }
+        guard isEnabled, settings.sfxVolume != .off, let player = players[effect] else { return }
+        player.volume = settings.sfxVolume.value
         player.currentTime = 0
         player.play()
     }
 
     func startBGM() {
-        guard isEnabled else { return }
+        guard isEnabled, settings.bgmVolume != .off else { return }
         if bgmPlayer == nil,
            let url = Bundle.main.url(forResource: "bgm", withExtension: "wav"),
            let player = try? AVAudioPlayer(contentsOf: url) {
             player.numberOfLoops = -1   // lặp vô hạn
-            player.volume = 0.5
             bgmPlayer = player
         }
+        bgmPlayer?.volume = settings.bgmVolume.value
         bgmPlayer?.currentTime = 0
         bgmPlayer?.play()
     }
@@ -69,13 +69,18 @@ final class AudioManager {
         bgmPlayer?.stop()
     }
 
-    // MARK: - Settings
+    // MARK: - Settings passthrough
 
     func setEnabled(_ on: Bool) {
-        isEnabled = on
-        store.set(on, forKey: AudioManager.enabledKey)
+        settings.audioEnabled = on
         if !on { stopBGM() }
     }
 
     func toggleEnabled() { setEnabled(!isEnabled) }
+
+    /// Áp lại âm lượng ngay khi đổi trong settings.
+    func refreshVolume() {
+        bgmPlayer?.volume = settings.bgmVolume.value
+        if !isEnabled || settings.bgmVolume == .off { stopBGM() }
+    }
 }

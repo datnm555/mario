@@ -17,32 +17,41 @@ final class TouchControls: SKNode {
 
     private let buttonAlpha: CGFloat = 0.28
 
+    private var scale: CGFloat = 1
+    private var baseR: CGFloat = 52
+
     /// designSize = kích thước scene (camera-space). Gốc toạ độ camera ở giữa.
-    func setup(designSize: CGSize) {
+    /// Kích thước + tay thuận đọc từ SettingsStore.
+    func setup(designSize: CGSize, settings: SettingsStore = .shared) {
         removeAllChildren()
+        scale = settings.controlScale.factor
+        let leftHanded = settings.leftHanded
         let halfW = designSize.width / 2
         let halfH = designSize.height / 2
         let margin: CGFloat = 28
-        let r: CGFloat = 52
+        let r = baseR * scale
+
+        // Tay thuận: mirror trục X (D-pad ↔ A/B đổi bên).
+        func mx(_ x: CGFloat) -> CGFloat { leftHanded ? -x : x }
 
         leftButton = makeButton(radius: r, label: "◀")
-        leftButton.position = CGPoint(x: -halfW + margin + r, y: -halfH + margin + r)
+        leftButton.position = CGPoint(x: mx(-halfW + margin + r), y: -halfH + margin + r)
         leftButton.name = "left"
         addChild(leftButton)
 
         rightButton = makeButton(radius: r, label: "▶")
-        rightButton.position = CGPoint(x: -halfW + margin + r * 3 + 18, y: -halfH + margin + r)
+        rightButton.position = CGPoint(x: mx(-halfW + margin + r * 3 + 18), y: -halfH + margin + r)
         rightButton.name = "right"
         addChild(rightButton)
 
-        jumpButton = makeButton(radius: r + 8, label: "A")
-        jumpButton.position = CGPoint(x: halfW - margin - r - 8, y: -halfH + margin + r)
+        jumpButton = makeButton(radius: r + 8 * scale, label: "A")
+        jumpButton.position = CGPoint(x: mx(halfW - margin - r - 8), y: -halfH + margin + r)
         jumpButton.name = "jump"
         addChild(jumpButton)
 
         // Nút bắn (B) — nhỏ hơn, đặt trái nút A, chéo lên trên.
-        fireButton = makeButton(radius: r - 6, label: "B")
-        fireButton.position = CGPoint(x: halfW - margin - r * 3 - 6, y: -halfH + margin + r + 40)
+        fireButton = makeButton(radius: r - 6 * scale, label: "B")
+        fireButton.position = CGPoint(x: mx(halfW - margin - r * 3 - 6), y: -halfH + margin + r + 40 * scale)
         fireButton.name = "fire"
         fireButton.fillColor = SKColor(red: 0.9, green: 0.5, blue: 0.2, alpha: buttonAlpha)
         addChild(fireButton)
@@ -113,8 +122,8 @@ final class TouchControls: SKNode {
         for button in [leftButton, rightButton, jumpButton, fireButton] {
             guard let b = button else { continue }
             let p = b.convert(scenePoint, from: scene!)
-            let baseRadius: CGFloat = (b == jumpButton) ? 60 : (b == fireButton ? 46 : 52)
-            if hypot(p.x, p.y) <= baseRadius + 16 { return b.name } // pad hit area
+            let base: CGFloat = (b == jumpButton) ? 60 : (b == fireButton ? 46 : 52)
+            if hypot(p.x, p.y) <= base * scale + 16 { return b.name } // pad hit area
         }
         return nil
     }

@@ -17,6 +17,10 @@ enum SceneRouter {
         configure(LevelSelectScene(size: GameConfig.designSize))
     }
 
+    static func makeSettings() -> SettingsScene {
+        configure(SettingsScene(size: GameConfig.designSize))
+    }
+
     static func makeGame(levelIndex: Int) -> GameScene {
         let scene = GameScene(size: GameConfig.designSize)
         scene.levelIndex = levelIndex
@@ -31,6 +35,10 @@ enum SceneRouter {
 
     static func goLevelSelect(from scene: SKScene) {
         scene.view?.presentScene(makeLevelSelect(), transition: .fade(withDuration: 0.4))
+    }
+
+    static func goSettings(from scene: SKScene) {
+        scene.view?.presentScene(makeSettings(), transition: .fade(withDuration: 0.35))
     }
 
     static func goGame(levelIndex: Int, from scene: SKScene) {

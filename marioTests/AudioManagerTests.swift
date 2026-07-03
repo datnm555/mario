@@ -10,9 +10,9 @@ private final class FakeAudioStore: KeyValueStore {
 
 final class AudioManagerTests: XCTestCase {
 
-    private func makeManager() -> (AudioManager, FakeAudioStore) {
-        let store = FakeAudioStore()
-        return (AudioManager(store: store, preload: false), store)
+    private func makeManager() -> (AudioManager, SettingsStore) {
+        let settings = SettingsStore(store: FakeAudioStore())
+        return (AudioManager(settings: settings, preload: false), settings)
     }
 
     func testEnabledByDefault() {
@@ -29,11 +29,11 @@ final class AudioManagerTests: XCTestCase {
     }
 
     func testEnabledPersists() {
-        let store = FakeAudioStore()
-        let a1 = AudioManager(store: store, preload: false)
+        let fake = FakeAudioStore()
+        let a1 = AudioManager(settings: SettingsStore(store: fake), preload: false)
         a1.setEnabled(false)
         // Instance mới đọc cùng store → nhớ tắt.
-        let a2 = AudioManager(store: store, preload: false)
+        let a2 = AudioManager(settings: SettingsStore(store: fake), preload: false)
         XCTAssertFalse(a2.isEnabled)
     }
 
@@ -45,7 +45,6 @@ final class AudioManagerTests: XCTestCase {
     }
 
     func testAllEffectsHaveRawNames() {
-        // Mỗi SoundEffect map tới 1 file .wav (đảm bảo không thiếu asset).
         for effect in SoundEffect.allCases {
             XCTAssertFalse(effect.rawValue.isEmpty)
         }
@@ -55,7 +54,7 @@ final class AudioManagerTests: XCTestCase {
     func testPlayWhenDisabledDoesNothing() {
         let (audio, _) = makeManager()
         audio.setEnabled(false)
-        audio.play(.coin)  // preload=false → không có player; chỉ đảm bảo không crash
+        audio.play(.coin)  // preload=false → không player; đảm bảo không crash
         XCTAssertFalse(audio.isEnabled)
     }
 }
