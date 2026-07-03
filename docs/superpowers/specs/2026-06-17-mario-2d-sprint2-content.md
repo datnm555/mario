@@ -123,11 +123,20 @@ GameScene --hết mạng--> LevelSelectScene
 ## 6. Trạng thái triển khai
 
 - [x] Spec viết xong (file này)
-- [ ] Chốt Open Questions với user
-- [ ] Viết implementation plan Sprint 2 (skill `writing-plans`) — chia task có acceptance criteria
-- [ ] Code Sprint 2 (đề xuất thứ tự: ProgressStore → SceneRouter/Menu → enemy mới → power-up → audio → parallax → 5 màn → polish)
+- [~] Code Sprint 2 (đang làm — xem tiến độ dưới)
+  - [x] Step 1: ProgressStore (save tiến độ) — +11 tests
+  - [x] Step 2: SceneRouter + MenuScene + LevelSelectScene + GameScene nhận levelIndex/route + 5 màn
+  - [ ] Step 3: enemy mới (Koopa, Flying)
+  - [ ] Step 4: power-up (Mushroom/FireFlower/Fireball) + Player.PowerState
+  - [ ] Step 5: QuestionBlock + Pipe
+  - [ ] Step 6: AudioManager (BGM + SFX)
+  - [ ] Step 7: ParallaxBackground + AnimationLibrary
+  - [ ] Step 8: thiết kế/cân bằng 5 màn
 - [ ] Test device thật → đóng Sprint 2
 - [ ] Sprint 2 done → mở Sprint 3 (menu/settings/accessibility)
+
+**Default đã chọn cho Open Questions:** level select = lưới nút (Q6); save có best-time (Q7).
+Còn lại (số màn, pipe transport, audio asset, animation placeholder, koopa shell) sẽ chốt khi tới Step tương ứng.
 
 ---
 
