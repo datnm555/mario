@@ -137,6 +137,14 @@ final class Player: SKSpriteNode {
         guard newState != state else { return }
         state = newState
         applyStateAppearance()
+        applyStateAnimation()
+    }
+
+    private func applyStateAnimation() {
+        guard state != .dead else { removeAction(forKey: "anim"); return }
+        if let action = AnimationLibrary.loopingAction(for: state) {
+            run(action, withKey: "anim")
+        }
     }
 
     private func applyStateAppearance() {
@@ -193,10 +201,7 @@ final class Player: SKSpriteNode {
         invulnTimer = invulnDuration
         applyPowerAppearance()
         removeAction(forKey: "invuln")
-        let blink = SKAction.sequence([.fadeAlpha(to: 0.35, duration: 0.1),
-                                       .fadeAlpha(to: 1.0, duration: 0.1)])
-        run(.sequence([.repeat(blink, count: Int(invulnDuration / 0.2)),
-                       .fadeAlpha(to: 1.0, duration: 0)]), withKey: "invuln")
+        run(AnimationLibrary.hurtBlink(duration: invulnDuration), withKey: "invuln")
     }
 
     /// Thử bắn: chỉ khi đang fire + hết cooldown. Trả về true nếu được bắn.

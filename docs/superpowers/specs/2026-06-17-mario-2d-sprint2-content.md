@@ -130,7 +130,7 @@ GameScene --hết mạng--> LevelSelectScene
   - [x] Step 4: power-up (Mushroom/FireFlower/Fireball) + Player.PowerState (small/big/fire) — +16 tests
   - [x] Step 5: QuestionBlock (đập nhả coin/nấm) + Pipe (vật cản solid, chưa warp) — +5 tests
   - [x] Step 6: AudioManager (BGM loop + 8 SFX, WAV tự sinh bằng code, mute persist) — +6 tests
-  - [ ] Step 7: ParallaxBackground + AnimationLibrary
+  - [x] Step 7: ParallaxBackground (mây+đồi cuộn) + AnimationLibrary (SKAction theo state) — +6 tests
   - [ ] Step 8: thiết kế/cân bằng 5 màn
 - [ ] Test device thật → đóng Sprint 2
 - [ ] Sprint 2 done → mở Sprint 3 (menu/settings/accessibility)

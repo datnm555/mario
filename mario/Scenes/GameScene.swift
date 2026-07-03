@@ -19,6 +19,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private let cam = SKCameraNode()
     private let touchControls = TouchControls()
     private let hud = HUDOverlay()
+    private let parallax = ParallaxBackground()
 
     private var player: Player!
     private var enemies: [any Enemy] = []
@@ -44,8 +45,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         camera = cam
         addChild(cam)
+        cam.addChild(parallax)
         cam.addChild(hud)
         cam.addChild(touchControls)
+        parallax.setup(designSize: GameScene.designSize)
         hud.setup(designSize: GameScene.designSize)
         touchControls.setup(designSize: GameScene.designSize)
 
@@ -172,6 +175,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameState == .playing, let player = player else { return }
         updateGrounded(for: player)
         centerCameraOnPlayer(immediate: false)
+        parallax.update(cameraX: cam.position.x)
     }
 
     override func didFinishUpdate() {
