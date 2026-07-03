@@ -86,6 +86,17 @@ final class LevelLoaderTests: XCTestCase {
         XCTAssertNil(lvl.flagPosition)
     }
 
+    /// Integration: cả 5 màn ship trong bundle phải parse được + có player spawn + cờ.
+    func testAllShippedLevelsLoad() throws {
+        for i in 1...GameConfig.totalLevels {
+            let name = GameConfig.levelName(for: i)
+            let lvl = try LevelLoader.load(named: name)
+            XCTAssertNotNil(lvl.flagPosition, "\(name) phải có cờ kết thúc")
+            XCTAssertGreaterThan(lvl.tilesNode.children.count, 0, "\(name) phải có tile")
+            XCTAssertGreaterThan(lvl.width, 0)
+        }
+    }
+
     func testInvalidJSONThrows() {
         let bad = Data("{ not valid json".utf8)
         XCTAssertThrowsError(try LevelLoader.load(jsonData: bad)) { error in

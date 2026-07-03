@@ -131,8 +131,11 @@ GameScene --hết mạng--> LevelSelectScene
   - [x] Step 5: QuestionBlock (đập nhả coin/nấm) + Pipe (vật cản solid, chưa warp) — +5 tests
   - [x] Step 6: AudioManager (BGM loop + 8 SFX, WAV tự sinh bằng code, mute persist) — +6 tests
   - [x] Step 7: ParallaxBackground (mây+đồi cuộn) + AnimationLibrary (SKAction theo state) — +6 tests
-  - [ ] Step 8: thiết kế/cân bằng 5 màn
+  - [x] Step 8: thiết kế/cân bằng 5 màn (đường cong độ khó, pit≤4, platform≤2 tile) + integration test load cả 5 màn
 - [ ] Test device thật → đóng Sprint 2
+
+**Sprint 2 CODE HOÀN TẤT** (2026-07-03): 91 unit tests pass, build + launch OK, gameplay verify trực quan (parallax, ?block, pipe, flying enemy, D-pad+A+B). Chỉ còn test device thật.
+Đường cong độ khó: 1-1 (2 goomba, dạy nhảy) → 1-5 (2 koopa + 2 flying + 2 hố + gauntlet). Enemy 2→2→3→5→6, width 34→52.
 - [ ] Sprint 2 done → mở Sprint 3 (menu/settings/accessibility)
 
 **Default đã chọn cho Open Questions:** level select = lưới nút (Q6); save có best-time (Q7).
