@@ -1,10 +1,16 @@
 import SpriteKit
 
+/// Vị trí + loại của 1 enemy cần spawn.
+struct EnemySpawn: Equatable {
+    let kind: EnemyKind
+    let position: CGPoint
+}
+
 /// Kết quả load 1 level: world node chứa tile, + các spawn point cho entity.
 struct LoadedLevel {
     let tilesNode: SKNode
     let playerSpawn: CGPoint
-    let enemySpawns: [CGPoint]
+    let enemySpawns: [EnemySpawn]
     let coinSpawns: [CGPoint]
     let flagPosition: CGPoint?
     let width: CGFloat
@@ -57,7 +63,7 @@ enum LevelLoader {
 
         let tilesNode = SKNode()
         var playerSpawn = CGPoint(x: ts, y: ts * 2)
-        var enemySpawns: [CGPoint] = []
+        var enemySpawns: [EnemySpawn] = []
         var coinSpawns: [CGPoint] = []
         var flagPosition: CGPoint?
 
@@ -78,7 +84,11 @@ enum LevelLoader {
                 case "P":
                     playerSpawn = pos
                 case "E":
-                    enemySpawns.append(pos)
+                    enemySpawns.append(EnemySpawn(kind: .goomba, position: pos))
+                case "K":
+                    enemySpawns.append(EnemySpawn(kind: .koopa, position: pos))
+                case "Y":
+                    enemySpawns.append(EnemySpawn(kind: .flying, position: pos))
                 case "C":
                     coinSpawns.append(pos)
                 case "F":

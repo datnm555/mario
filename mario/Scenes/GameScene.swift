@@ -21,7 +21,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private let hud = HUDOverlay()
 
     private var player: Player!
-    private var enemies: [GoombaEnemy] = []
+    private var enemies: [any Enemy] = []
     private var level: LoadedLevel!
 
     private var coins = 0
@@ -78,12 +78,12 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(p)
         player = p
 
-        // Enemies
+        // Enemies (đa loại theo spawn.kind)
         for spawn in level.enemySpawns {
-            let e = GoombaEnemy()
-            e.position = spawn
-            e.anchorPatrol()
-            addChild(e)
+            let e = makeEnemy(kind: spawn.kind)
+            e.node.position = spawn.position
+            e.didSpawn()
+            addChild(e.node)
             enemies.append(e)
         }
 
@@ -196,9 +196,16 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // Player + Enemy → stomp hoặc chết
         if mask == (PhysicsCategory.player | PhysicsCategory.enemy) {
-            let enemyNode = (a.categoryBitMask == PhysicsCategory.enemy ? a.node : b.node) as? GoombaEnemy
-            guard let enemy = enemyNode, !enemy.isDead, !player.isDead else { return }
+            let enemyNode = (a.categoryBitMask == PhysicsCategory.enemy ? a.node : b.node) as? SKSpriteNode
+            guard let node = enemyNode, let enemy = enemy(for: node),
+                  !enemy.isDead, !player.isDead else { return }
             resolvePlayerEnemy(enemy)
+            return
+        }
+
+        // Enemy + Enemy → mai rùa đang trượt giết con còn lại
+        if mask == PhysicsCategory.enemy {
+            resolveEnemyEnemy(a.node, b.node)
             return
         }
 
@@ -208,18 +215,48 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    /// Player ở trên + đang rơi → stomp; ngược lại player chết.
-    private func resolvePlayerEnemy(_ enemy: GoombaEnemy) {
-        let playerBottom = player.position.y - Player.bodySize.height / 2
-        let enemyTop = enemy.position.y + GoombaEnemy.bodySize.height / 2
-        let falling = (player.physicsBody?.velocity.dy ?? 0) <= 5
-        if playerBottom >= enemyTop - 10 && falling {
-            enemy.stomp()
-            enemies.removeAll { $0 === enemy }
-            player.bounce()
-        } else {
-            playerDied()
+    private func makeEnemy(kind: EnemyKind) -> any Enemy {
+        switch kind {
+        case .goomba: return GoombaEnemy()
+        case .koopa:  return KoopaEnemy()
+        case .flying: return FlyingEnemy()
         }
+    }
+
+    private func enemy(for node: SKNode) -> (any Enemy)? {
+        enemies.first { $0.node === node }
+    }
+
+    private func pruneDeadEnemies() {
+        enemies.removeAll { $0.isDead }
+    }
+
+    /// Player ở trên + đang rơi → stomp; ngược lại theo phản hồi của enemy.
+    private func resolvePlayerEnemy(_ enemy: any Enemy) {
+        let node = enemy.node
+        let playerBottom = player.position.y - Player.bodySize.height / 2
+        let enemyTop = node.position.y + node.frame.height / 2
+        let falling = (player.physicsBody?.velocity.dy ?? 0) <= 5
+
+        if playerBottom >= enemyTop - 10 && falling {
+            if enemy.onStompFromAbove() { player.bounce() }
+        } else {
+            let playerDies = enemy.onSideContact(playerX: player.position.x)
+            if playerDies { playerDied() }
+        }
+        pruneDeadEnemies()
+    }
+
+    /// Mai trượt (isSlidingShell) tông enemy khác → giết enemy đó.
+    private func resolveEnemyEnemy(_ nodeA: SKNode?, _ nodeB: SKNode?) {
+        guard let nA = nodeA, let nB = nodeB,
+              let eA = enemy(for: nA), let eB = enemy(for: nB) else { return }
+        if eA.isSlidingShell && !eB.isDead && !eB.isSlidingShell {
+            eB.onShellHit()
+        } else if eB.isSlidingShell && !eA.isDead && !eA.isSlidingShell {
+            eA.onShellHit()
+        }
+        pruneDeadEnemies()
     }
 
     // MARK: - Win / Lose
