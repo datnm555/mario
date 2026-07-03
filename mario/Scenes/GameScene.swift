@@ -426,6 +426,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         progress.markCleared(level: levelIndex)
         progress.addCoins(coins)
         progress.recordTime(elapsed, level: levelIndex)
+        GameCenterManager.shared.submit(time: elapsed, level: levelIndex)
 
         let timeStr = String(format: "%.1fs", elapsed)
         showMessage("YOU WIN! 🎉\n⏱ \(timeStr)\nChạm để tiếp tục",

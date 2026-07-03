@@ -116,8 +116,10 @@ mario/
   - [x] Step 4: Control scale + left-handed áp vào TouchControls (đọc SettingsStore)
   - [x] Step 2: Pause menu (nút II → overlay Resume/Restart/Settings/Menu, freeze physics)
   - [x] Step 5: Accessibility (VoiceOver label cho ButtonNode + reduce motion cho parallax) — +3 tests
-  - [ ] Step 6: (optional) GameCenterManager stub/thật
+  - [x] Step 6: GameCenterManager (authenticate + submit best-time, no-op an toàn khi chưa config) — +4 tests
 - [ ] Test device thật → đóng Sprint 3
+
+**Sprint 3 CODE HOÀN TẤT** (2026-07-03): 105 unit tests pass, build + launch OK. Settings/pause/haptic/accessibility/Game Center stub xong. Còn: bật Game Center thật (entitlement + ASC) ở Sprint 4 + test device thật.
 - [ ] Sprint 3 done → mở Sprint 4 (original IP + submit App Store)
 
 **Default chọn:** Game Center = stub Sprint 3; Settings = 1 scene chung; volume 3 mức; left-handed = có.

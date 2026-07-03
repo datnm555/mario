@@ -19,6 +19,7 @@ struct ContentView: View {
         SpriteView(scene: scene,
                    options: [.ignoresSiblingOrder])
             .ignoresSafeArea()
+            .onAppear { GameCenterManager.shared.authenticate() }
     }
 }
 

@@ -37,40 +37,42 @@
 		AB1000000000000000000038 = {isa = PBXBuildFile; fileRef = AB1000000000000000000037 /* AnimationLibrary.swift */; };
 		AB100000000000000000003A = {isa = PBXBuildFile; fileRef = AB1000000000000000000039 /* SettingsStore.swift */; };
 		AB100000000000000000003C = {isa = PBXBuildFile; fileRef = AB100000000000000000003B /* HapticManager.swift */; };
-		AB100000000000000000003E = {isa = PBXBuildFile; fileRef = AB100000000000000000003D /* level-1-1.json */; };
-		AB1000000000000000000040 = {isa = PBXBuildFile; fileRef = AB100000000000000000003F /* level-1-2.json */; };
-		AB1000000000000000000042 = {isa = PBXBuildFile; fileRef = AB1000000000000000000041 /* level-1-3.json */; };
-		AB1000000000000000000044 = {isa = PBXBuildFile; fileRef = AB1000000000000000000043 /* level-1-4.json */; };
-		AB1000000000000000000046 = {isa = PBXBuildFile; fileRef = AB1000000000000000000045 /* level-1-5.json */; };
-		AB1000000000000000000048 = {isa = PBXBuildFile; fileRef = AB1000000000000000000047 /* bgm.wav */; };
-		AB100000000000000000004A = {isa = PBXBuildFile; fileRef = AB1000000000000000000049 /* brick.wav */; };
-		AB100000000000000000004C = {isa = PBXBuildFile; fileRef = AB100000000000000000004B /* coin.wav */; };
-		AB100000000000000000004E = {isa = PBXBuildFile; fileRef = AB100000000000000000004D /* death.wav */; };
-		AB1000000000000000000050 = {isa = PBXBuildFile; fileRef = AB100000000000000000004F /* fireball.wav */; };
-		AB1000000000000000000052 = {isa = PBXBuildFile; fileRef = AB1000000000000000000051 /* jump.wav */; };
-		AB1000000000000000000054 = {isa = PBXBuildFile; fileRef = AB1000000000000000000053 /* powerup.wav */; };
-		AB1000000000000000000056 = {isa = PBXBuildFile; fileRef = AB1000000000000000000055 /* stomp.wav */; };
-		AB1000000000000000000058 = {isa = PBXBuildFile; fileRef = AB1000000000000000000057 /* win.wav */; };
-		AB100000000000000000005A = {isa = PBXBuildFile; fileRef = AB1000000000000000000059 /* Assets.xcassets */; };
-		AB100000000000000000005C = {isa = PBXBuildFile; fileRef = AB100000000000000000005B /* InputStateTests.swift */; };
-		AB100000000000000000005E = {isa = PBXBuildFile; fileRef = AB100000000000000000005D /* LevelLoaderTests.swift */; };
-		AB1000000000000000000060 = {isa = PBXBuildFile; fileRef = AB100000000000000000005F /* PlayerTests.swift */; };
-		AB1000000000000000000062 = {isa = PBXBuildFile; fileRef = AB1000000000000000000061 /* EnemyTests.swift */; };
-		AB1000000000000000000064 = {isa = PBXBuildFile; fileRef = AB1000000000000000000063 /* ProgressStoreTests.swift */; };
-		AB1000000000000000000066 = {isa = PBXBuildFile; fileRef = AB1000000000000000000065 /* PowerupTests.swift */; };
-		AB1000000000000000000068 = {isa = PBXBuildFile; fileRef = AB1000000000000000000067 /* QuestionBlockTests.swift */; };
-		AB100000000000000000006A = {isa = PBXBuildFile; fileRef = AB1000000000000000000069 /* AudioManagerTests.swift */; };
-		AB100000000000000000006C = {isa = PBXBuildFile; fileRef = AB100000000000000000006B /* AnimationTests.swift */; };
-		AB100000000000000000006E = {isa = PBXBuildFile; fileRef = AB100000000000000000006D /* SettingsStoreTests.swift */; };
+		AB100000000000000000003E = {isa = PBXBuildFile; fileRef = AB100000000000000000003D /* GameCenterManager.swift */; };
+		AB1000000000000000000040 = {isa = PBXBuildFile; fileRef = AB100000000000000000003F /* level-1-1.json */; };
+		AB1000000000000000000042 = {isa = PBXBuildFile; fileRef = AB1000000000000000000041 /* level-1-2.json */; };
+		AB1000000000000000000044 = {isa = PBXBuildFile; fileRef = AB1000000000000000000043 /* level-1-3.json */; };
+		AB1000000000000000000046 = {isa = PBXBuildFile; fileRef = AB1000000000000000000045 /* level-1-4.json */; };
+		AB1000000000000000000048 = {isa = PBXBuildFile; fileRef = AB1000000000000000000047 /* level-1-5.json */; };
+		AB100000000000000000004A = {isa = PBXBuildFile; fileRef = AB1000000000000000000049 /* bgm.wav */; };
+		AB100000000000000000004C = {isa = PBXBuildFile; fileRef = AB100000000000000000004B /* brick.wav */; };
+		AB100000000000000000004E = {isa = PBXBuildFile; fileRef = AB100000000000000000004D /* coin.wav */; };
+		AB1000000000000000000050 = {isa = PBXBuildFile; fileRef = AB100000000000000000004F /* death.wav */; };
+		AB1000000000000000000052 = {isa = PBXBuildFile; fileRef = AB1000000000000000000051 /* fireball.wav */; };
+		AB1000000000000000000054 = {isa = PBXBuildFile; fileRef = AB1000000000000000000053 /* jump.wav */; };
+		AB1000000000000000000056 = {isa = PBXBuildFile; fileRef = AB1000000000000000000055 /* powerup.wav */; };
+		AB1000000000000000000058 = {isa = PBXBuildFile; fileRef = AB1000000000000000000057 /* stomp.wav */; };
+		AB100000000000000000005A = {isa = PBXBuildFile; fileRef = AB1000000000000000000059 /* win.wav */; };
+		AB100000000000000000005C = {isa = PBXBuildFile; fileRef = AB100000000000000000005B /* Assets.xcassets */; };
+		AB100000000000000000005E = {isa = PBXBuildFile; fileRef = AB100000000000000000005D /* InputStateTests.swift */; };
+		AB1000000000000000000060 = {isa = PBXBuildFile; fileRef = AB100000000000000000005F /* LevelLoaderTests.swift */; };
+		AB1000000000000000000062 = {isa = PBXBuildFile; fileRef = AB1000000000000000000061 /* PlayerTests.swift */; };
+		AB1000000000000000000064 = {isa = PBXBuildFile; fileRef = AB1000000000000000000063 /* EnemyTests.swift */; };
+		AB1000000000000000000066 = {isa = PBXBuildFile; fileRef = AB1000000000000000000065 /* ProgressStoreTests.swift */; };
+		AB1000000000000000000068 = {isa = PBXBuildFile; fileRef = AB1000000000000000000067 /* PowerupTests.swift */; };
+		AB100000000000000000006A = {isa = PBXBuildFile; fileRef = AB1000000000000000000069 /* QuestionBlockTests.swift */; };
+		AB100000000000000000006C = {isa = PBXBuildFile; fileRef = AB100000000000000000006B /* AudioManagerTests.swift */; };
+		AB100000000000000000006E = {isa = PBXBuildFile; fileRef = AB100000000000000000006D /* AnimationTests.swift */; };
+		AB1000000000000000000070 = {isa = PBXBuildFile; fileRef = AB100000000000000000006F /* SettingsStoreTests.swift */; };
+		AB1000000000000000000072 = {isa = PBXBuildFile; fileRef = AB1000000000000000000071 /* GameCenterManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AB100000000000000000008E = {isa = PBXContainerItemProxy; containerPortal = AB100000000000000000007D /* Project object */; proxyType = 1; remoteGlobalIDString = AB100000000000000000007B; remoteInfo = mario; };
+		AB1000000000000000000092 = {isa = PBXContainerItemProxy; containerPortal = AB1000000000000000000081 /* Project object */; proxyType = 1; remoteGlobalIDString = AB100000000000000000007F; remoteInfo = mario; };
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AB1000000000000000000079 /* mario.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mario.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB100000000000000000007A /* marioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = marioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB100000000000000000007D /* mario.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mario.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB100000000000000000007E /* marioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = marioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB1000000000000000000001 /* MarioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MarioApp.swift"; sourceTree = "<group>"; };
 		AB1000000000000000000003 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView.swift"; sourceTree = "<group>"; };
 		AB1000000000000000000005 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameScene.swift"; sourceTree = "<group>"; };
@@ -101,55 +103,57 @@
 		AB1000000000000000000037 /* AnimationLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnimationLibrary.swift"; sourceTree = "<group>"; };
 		AB1000000000000000000039 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStore.swift"; sourceTree = "<group>"; };
 		AB100000000000000000003B /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HapticManager.swift"; sourceTree = "<group>"; };
-		AB100000000000000000003D /* level-1-1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-1.json"; sourceTree = "<group>"; };
-		AB100000000000000000003F /* level-1-2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-2.json"; sourceTree = "<group>"; };
-		AB1000000000000000000041 /* level-1-3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-3.json"; sourceTree = "<group>"; };
-		AB1000000000000000000043 /* level-1-4.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-4.json"; sourceTree = "<group>"; };
-		AB1000000000000000000045 /* level-1-5.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-5.json"; sourceTree = "<group>"; };
-		AB1000000000000000000047 /* bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "bgm.wav"; sourceTree = "<group>"; };
-		AB1000000000000000000049 /* brick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "brick.wav"; sourceTree = "<group>"; };
-		AB100000000000000000004B /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "coin.wav"; sourceTree = "<group>"; };
-		AB100000000000000000004D /* death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "death.wav"; sourceTree = "<group>"; };
-		AB100000000000000000004F /* fireball.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "fireball.wav"; sourceTree = "<group>"; };
-		AB1000000000000000000051 /* jump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "jump.wav"; sourceTree = "<group>"; };
-		AB1000000000000000000053 /* powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "powerup.wav"; sourceTree = "<group>"; };
-		AB1000000000000000000055 /* stomp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "stomp.wav"; sourceTree = "<group>"; };
-		AB1000000000000000000057 /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "win.wav"; sourceTree = "<group>"; };
-		AB1000000000000000000059 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
-		AB100000000000000000005B /* InputStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InputStateTests.swift"; sourceTree = "<group>"; };
-		AB100000000000000000005D /* LevelLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelLoaderTests.swift"; sourceTree = "<group>"; };
-		AB100000000000000000005F /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerTests.swift"; sourceTree = "<group>"; };
-		AB1000000000000000000061 /* EnemyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnemyTests.swift"; sourceTree = "<group>"; };
-		AB1000000000000000000063 /* ProgressStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressStoreTests.swift"; sourceTree = "<group>"; };
-		AB1000000000000000000065 /* PowerupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PowerupTests.swift"; sourceTree = "<group>"; };
-		AB1000000000000000000067 /* QuestionBlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuestionBlockTests.swift"; sourceTree = "<group>"; };
-		AB1000000000000000000069 /* AudioManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioManagerTests.swift"; sourceTree = "<group>"; };
-		AB100000000000000000006B /* AnimationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnimationTests.swift"; sourceTree = "<group>"; };
-		AB100000000000000000006D /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStoreTests.swift"; sourceTree = "<group>"; };
+		AB100000000000000000003D /* GameCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameCenterManager.swift"; sourceTree = "<group>"; };
+		AB100000000000000000003F /* level-1-1.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-1.json"; sourceTree = "<group>"; };
+		AB1000000000000000000041 /* level-1-2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-2.json"; sourceTree = "<group>"; };
+		AB1000000000000000000043 /* level-1-3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-3.json"; sourceTree = "<group>"; };
+		AB1000000000000000000045 /* level-1-4.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-4.json"; sourceTree = "<group>"; };
+		AB1000000000000000000047 /* level-1-5.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "level-1-5.json"; sourceTree = "<group>"; };
+		AB1000000000000000000049 /* bgm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "bgm.wav"; sourceTree = "<group>"; };
+		AB100000000000000000004B /* brick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "brick.wav"; sourceTree = "<group>"; };
+		AB100000000000000000004D /* coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "coin.wav"; sourceTree = "<group>"; };
+		AB100000000000000000004F /* death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "death.wav"; sourceTree = "<group>"; };
+		AB1000000000000000000051 /* fireball.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "fireball.wav"; sourceTree = "<group>"; };
+		AB1000000000000000000053 /* jump.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "jump.wav"; sourceTree = "<group>"; };
+		AB1000000000000000000055 /* powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "powerup.wav"; sourceTree = "<group>"; };
+		AB1000000000000000000057 /* stomp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "stomp.wav"; sourceTree = "<group>"; };
+		AB1000000000000000000059 /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "win.wav"; sourceTree = "<group>"; };
+		AB100000000000000000005B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		AB100000000000000000005D /* InputStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InputStateTests.swift"; sourceTree = "<group>"; };
+		AB100000000000000000005F /* LevelLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelLoaderTests.swift"; sourceTree = "<group>"; };
+		AB1000000000000000000061 /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerTests.swift"; sourceTree = "<group>"; };
+		AB1000000000000000000063 /* EnemyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnemyTests.swift"; sourceTree = "<group>"; };
+		AB1000000000000000000065 /* ProgressStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgressStoreTests.swift"; sourceTree = "<group>"; };
+		AB1000000000000000000067 /* PowerupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PowerupTests.swift"; sourceTree = "<group>"; };
+		AB1000000000000000000069 /* QuestionBlockTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuestionBlockTests.swift"; sourceTree = "<group>"; };
+		AB100000000000000000006B /* AudioManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioManagerTests.swift"; sourceTree = "<group>"; };
+		AB100000000000000000006D /* AnimationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnimationTests.swift"; sourceTree = "<group>"; };
+		AB100000000000000000006F /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsStoreTests.swift"; sourceTree = "<group>"; };
+		AB1000000000000000000071 /* GameCenterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameCenterManagerTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		AB100000000000000000007F = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-		AB1000000000000000000082 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		AB1000000000000000000083 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		AB1000000000000000000086 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		AB1000000000000000000078 = {isa = PBXGroup; children = ( AB1000000000000000000075 /* mario */, AB1000000000000000000076 /* marioTests */, AB1000000000000000000077 /* Products */ ); sourceTree = "<group>"; };
-		AB1000000000000000000077 /* Products */ = {isa = PBXGroup; children = ( AB1000000000000000000079 /* mario.app */, AB100000000000000000007A /* marioTests.xctest */ ); name = Products; sourceTree = "<group>"; };
-		AB1000000000000000000075 /* mario */ = {isa = PBXGroup; children = (
-			AB100000000000000000006F /* App */,
-			AB1000000000000000000070 /* Scenes */,
-			AB1000000000000000000071 /* Entities */,
-			AB1000000000000000000072 /* Systems */,
-			AB1000000000000000000073 /* Levels */,
-			AB1000000000000000000074 /* Sounds */,
-			AB1000000000000000000059 /* Assets.xcassets */,
+		AB100000000000000000007C = {isa = PBXGroup; children = ( AB1000000000000000000079 /* mario */, AB100000000000000000007A /* marioTests */, AB100000000000000000007B /* Products */ ); sourceTree = "<group>"; };
+		AB100000000000000000007B /* Products */ = {isa = PBXGroup; children = ( AB100000000000000000007D /* mario.app */, AB100000000000000000007E /* marioTests.xctest */ ); name = Products; sourceTree = "<group>"; };
+		AB1000000000000000000079 /* mario */ = {isa = PBXGroup; children = (
+			AB1000000000000000000073 /* App */,
+			AB1000000000000000000074 /* Scenes */,
+			AB1000000000000000000075 /* Entities */,
+			AB1000000000000000000076 /* Systems */,
+			AB1000000000000000000077 /* Levels */,
+			AB1000000000000000000078 /* Sounds */,
+			AB100000000000000000005B /* Assets.xcassets */,
 		); path = mario; sourceTree = "<group>"; };
-		AB100000000000000000006F /* App */ = {isa = PBXGroup; children = (
+		AB1000000000000000000073 /* App */ = {isa = PBXGroup; children = (
 			AB1000000000000000000001 /* MarioApp.swift */,
 			AB1000000000000000000003 /* ContentView.swift */,
 		); path = App; sourceTree = "<group>"; };
-		AB1000000000000000000070 /* Scenes */ = {isa = PBXGroup; children = (
+		AB1000000000000000000074 /* Scenes */ = {isa = PBXGroup; children = (
 			AB1000000000000000000005 /* GameScene.swift */,
 			AB1000000000000000000007 /* HUDOverlay.swift */,
 			AB1000000000000000000009 /* TouchControls.swift */,
@@ -159,7 +163,7 @@
 			AB1000000000000000000011 /* ParallaxBackground.swift */,
 			AB1000000000000000000013 /* SettingsScene.swift */,
 		); path = Scenes; sourceTree = "<group>"; };
-		AB1000000000000000000071 /* Entities */ = {isa = PBXGroup; children = (
+		AB1000000000000000000075 /* Entities */ = {isa = PBXGroup; children = (
 			AB1000000000000000000015 /* Player.swift */,
 			AB1000000000000000000017 /* Enemy.swift */,
 			AB1000000000000000000019 /* KoopaEnemy.swift */,
@@ -171,7 +175,7 @@
 			AB1000000000000000000025 /* Fireball.swift */,
 			AB1000000000000000000027 /* QuestionBlock.swift */,
 		); path = Entities; sourceTree = "<group>"; };
-		AB1000000000000000000072 /* Systems */ = {isa = PBXGroup; children = (
+		AB1000000000000000000076 /* Systems */ = {isa = PBXGroup; children = (
 			AB1000000000000000000029 /* PhysicsCategories.swift */,
 			AB100000000000000000002B /* InputState.swift */,
 			AB100000000000000000002D /* LevelLoader.swift */,
@@ -182,72 +186,74 @@
 			AB1000000000000000000037 /* AnimationLibrary.swift */,
 			AB1000000000000000000039 /* SettingsStore.swift */,
 			AB100000000000000000003B /* HapticManager.swift */,
+			AB100000000000000000003D /* GameCenterManager.swift */,
 		); path = Systems; sourceTree = "<group>"; };
-		AB1000000000000000000073 /* Levels */ = {isa = PBXGroup; children = (
-			AB100000000000000000003D /* level-1-1.json */,
-			AB100000000000000000003F /* level-1-2.json */,
-			AB1000000000000000000041 /* level-1-3.json */,
-			AB1000000000000000000043 /* level-1-4.json */,
-			AB1000000000000000000045 /* level-1-5.json */,
+		AB1000000000000000000077 /* Levels */ = {isa = PBXGroup; children = (
+			AB100000000000000000003F /* level-1-1.json */,
+			AB1000000000000000000041 /* level-1-2.json */,
+			AB1000000000000000000043 /* level-1-3.json */,
+			AB1000000000000000000045 /* level-1-4.json */,
+			AB1000000000000000000047 /* level-1-5.json */,
 		); path = Levels; sourceTree = "<group>"; };
-		AB1000000000000000000074 /* Sounds */ = {isa = PBXGroup; children = (
-			AB1000000000000000000047 /* bgm.wav */,
-			AB1000000000000000000049 /* brick.wav */,
-			AB100000000000000000004B /* coin.wav */,
-			AB100000000000000000004D /* death.wav */,
-			AB100000000000000000004F /* fireball.wav */,
-			AB1000000000000000000051 /* jump.wav */,
-			AB1000000000000000000053 /* powerup.wav */,
-			AB1000000000000000000055 /* stomp.wav */,
-			AB1000000000000000000057 /* win.wav */,
+		AB1000000000000000000078 /* Sounds */ = {isa = PBXGroup; children = (
+			AB1000000000000000000049 /* bgm.wav */,
+			AB100000000000000000004B /* brick.wav */,
+			AB100000000000000000004D /* coin.wav */,
+			AB100000000000000000004F /* death.wav */,
+			AB1000000000000000000051 /* fireball.wav */,
+			AB1000000000000000000053 /* jump.wav */,
+			AB1000000000000000000055 /* powerup.wav */,
+			AB1000000000000000000057 /* stomp.wav */,
+			AB1000000000000000000059 /* win.wav */,
 		); path = Sounds; sourceTree = "<group>"; };
-		AB1000000000000000000076 /* marioTests */ = {isa = PBXGroup; children = (
-			AB100000000000000000005B /* InputStateTests.swift */,
-			AB100000000000000000005D /* LevelLoaderTests.swift */,
-			AB100000000000000000005F /* PlayerTests.swift */,
-			AB1000000000000000000061 /* EnemyTests.swift */,
-			AB1000000000000000000063 /* ProgressStoreTests.swift */,
-			AB1000000000000000000065 /* PowerupTests.swift */,
-			AB1000000000000000000067 /* QuestionBlockTests.swift */,
-			AB1000000000000000000069 /* AudioManagerTests.swift */,
-			AB100000000000000000006B /* AnimationTests.swift */,
-			AB100000000000000000006D /* SettingsStoreTests.swift */,
+		AB100000000000000000007A /* marioTests */ = {isa = PBXGroup; children = (
+			AB100000000000000000005D /* InputStateTests.swift */,
+			AB100000000000000000005F /* LevelLoaderTests.swift */,
+			AB1000000000000000000061 /* PlayerTests.swift */,
+			AB1000000000000000000063 /* EnemyTests.swift */,
+			AB1000000000000000000065 /* ProgressStoreTests.swift */,
+			AB1000000000000000000067 /* PowerupTests.swift */,
+			AB1000000000000000000069 /* QuestionBlockTests.swift */,
+			AB100000000000000000006B /* AudioManagerTests.swift */,
+			AB100000000000000000006D /* AnimationTests.swift */,
+			AB100000000000000000006F /* SettingsStoreTests.swift */,
+			AB1000000000000000000071 /* GameCenterManagerTests.swift */,
 		); path = marioTests; sourceTree = "<group>"; };
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		AB100000000000000000007B /* mario */ = {isa = PBXNativeTarget; buildConfigurationList = AB1000000000000000000085; buildPhases = ( AB100000000000000000007E, AB100000000000000000007F, AB1000000000000000000080 ); buildRules = (); dependencies = (); name = mario; productName = mario; productReference = AB1000000000000000000079 /* mario.app */; productType = "com.apple.product-type.application"; };
-		AB100000000000000000007C /* marioTests */ = {isa = PBXNativeTarget; buildConfigurationList = AB1000000000000000000086; buildPhases = ( AB1000000000000000000081, AB1000000000000000000082, AB1000000000000000000083 ); buildRules = (); dependencies = ( AB100000000000000000008D ); name = marioTests; productName = marioTests; productReference = AB100000000000000000007A /* marioTests.xctest */; productType = "com.apple.product-type.bundle.unit-test"; };
+		AB100000000000000000007F /* mario */ = {isa = PBXNativeTarget; buildConfigurationList = AB1000000000000000000089; buildPhases = ( AB1000000000000000000082, AB1000000000000000000083, AB1000000000000000000084 ); buildRules = (); dependencies = (); name = mario; productName = mario; productReference = AB100000000000000000007D /* mario.app */; productType = "com.apple.product-type.application"; };
+		AB1000000000000000000080 /* marioTests */ = {isa = PBXNativeTarget; buildConfigurationList = AB100000000000000000008A; buildPhases = ( AB1000000000000000000085, AB1000000000000000000086, AB1000000000000000000087 ); buildRules = (); dependencies = ( AB1000000000000000000091 ); name = marioTests; productName = marioTests; productReference = AB100000000000000000007E /* marioTests.xctest */; productType = "com.apple.product-type.bundle.unit-test"; };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		AB100000000000000000007D /* Project object */ = {isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1640; LastUpgradeCheck = 1640; TargetAttributes = { AB100000000000000000007B = { CreatedOnToolsVersion = 16.4; }; AB100000000000000000007C = { CreatedOnToolsVersion = 16.4; TestTargetID = AB100000000000000000007B; }; }; };
-			buildConfigurationList = AB1000000000000000000084; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = AB1000000000000000000078; productRefGroup = AB1000000000000000000077 /* Products */; projectDirPath = ""; projectRoot = ""; targets = ( AB100000000000000000007B /* mario */, AB100000000000000000007C /* marioTests */ ); };
+		AB1000000000000000000081 /* Project object */ = {isa = PBXProject; attributes = { BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 1640; LastUpgradeCheck = 1640; TargetAttributes = { AB100000000000000000007F = { CreatedOnToolsVersion = 16.4; }; AB1000000000000000000080 = { CreatedOnToolsVersion = 16.4; TestTargetID = AB100000000000000000007F; }; }; };
+			buildConfigurationList = AB1000000000000000000088; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = AB100000000000000000007C; productRefGroup = AB100000000000000000007B /* Products */; projectDirPath = ""; projectRoot = ""; targets = ( AB100000000000000000007F /* mario */, AB1000000000000000000080 /* marioTests */ ); };
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		AB1000000000000000000080 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
-			AB100000000000000000005A /* Assets.xcassets in Resources */,
-			AB100000000000000000003E /* level-1-1.json in Resources */,
-			AB1000000000000000000040 /* level-1-2.json in Resources */,
-			AB1000000000000000000042 /* level-1-3.json in Resources */,
-			AB1000000000000000000044 /* level-1-4.json in Resources */,
-			AB1000000000000000000046 /* level-1-5.json in Resources */,
-			AB1000000000000000000048 /* bgm.wav in Resources */,
-			AB100000000000000000004A /* brick.wav in Resources */,
-			AB100000000000000000004C /* coin.wav in Resources */,
-			AB100000000000000000004E /* death.wav in Resources */,
-			AB1000000000000000000050 /* fireball.wav in Resources */,
-			AB1000000000000000000052 /* jump.wav in Resources */,
-			AB1000000000000000000054 /* powerup.wav in Resources */,
-			AB1000000000000000000056 /* stomp.wav in Resources */,
-			AB1000000000000000000058 /* win.wav in Resources */,
+		AB1000000000000000000084 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
+			AB100000000000000000005C /* Assets.xcassets in Resources */,
+			AB1000000000000000000040 /* level-1-1.json in Resources */,
+			AB1000000000000000000042 /* level-1-2.json in Resources */,
+			AB1000000000000000000044 /* level-1-3.json in Resources */,
+			AB1000000000000000000046 /* level-1-4.json in Resources */,
+			AB1000000000000000000048 /* level-1-5.json in Resources */,
+			AB100000000000000000004A /* bgm.wav in Resources */,
+			AB100000000000000000004C /* brick.wav in Resources */,
+			AB100000000000000000004E /* coin.wav in Resources */,
+			AB1000000000000000000050 /* death.wav in Resources */,
+			AB1000000000000000000052 /* fireball.wav in Resources */,
+			AB1000000000000000000054 /* jump.wav in Resources */,
+			AB1000000000000000000056 /* powerup.wav in Resources */,
+			AB1000000000000000000058 /* stomp.wav in Resources */,
+			AB100000000000000000005A /* win.wav in Resources */,
 		); runOnlyForDeploymentPostprocessing = 0; };
-		AB1000000000000000000083 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		AB1000000000000000000087 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		AB100000000000000000007E = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+		AB1000000000000000000082 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
 			AB1000000000000000000002 /* MarioApp.swift in Sources */,
 			AB1000000000000000000004 /* ContentView.swift in Sources */,
 			AB1000000000000000000006 /* GameScene.swift in Sources */,
@@ -278,27 +284,29 @@
 			AB1000000000000000000038 /* AnimationLibrary.swift in Sources */,
 			AB100000000000000000003A /* SettingsStore.swift in Sources */,
 			AB100000000000000000003C /* HapticManager.swift in Sources */,
+			AB100000000000000000003E /* GameCenterManager.swift in Sources */,
 		); runOnlyForDeploymentPostprocessing = 0; };
-		AB1000000000000000000081 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
-			AB100000000000000000005C /* InputStateTests.swift in Sources */,
-			AB100000000000000000005E /* LevelLoaderTests.swift in Sources */,
-			AB1000000000000000000060 /* PlayerTests.swift in Sources */,
-			AB1000000000000000000062 /* EnemyTests.swift in Sources */,
-			AB1000000000000000000064 /* ProgressStoreTests.swift in Sources */,
-			AB1000000000000000000066 /* PowerupTests.swift in Sources */,
-			AB1000000000000000000068 /* QuestionBlockTests.swift in Sources */,
-			AB100000000000000000006A /* AudioManagerTests.swift in Sources */,
-			AB100000000000000000006C /* AnimationTests.swift in Sources */,
-			AB100000000000000000006E /* SettingsStoreTests.swift in Sources */,
+		AB1000000000000000000085 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+			AB100000000000000000005E /* InputStateTests.swift in Sources */,
+			AB1000000000000000000060 /* LevelLoaderTests.swift in Sources */,
+			AB1000000000000000000062 /* PlayerTests.swift in Sources */,
+			AB1000000000000000000064 /* EnemyTests.swift in Sources */,
+			AB1000000000000000000066 /* ProgressStoreTests.swift in Sources */,
+			AB1000000000000000000068 /* PowerupTests.swift in Sources */,
+			AB100000000000000000006A /* QuestionBlockTests.swift in Sources */,
+			AB100000000000000000006C /* AudioManagerTests.swift in Sources */,
+			AB100000000000000000006E /* AnimationTests.swift in Sources */,
+			AB1000000000000000000070 /* SettingsStoreTests.swift in Sources */,
+			AB1000000000000000000072 /* GameCenterManagerTests.swift in Sources */,
 		); runOnlyForDeploymentPostprocessing = 0; };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AB100000000000000000008D = {isa = PBXTargetDependency; target = AB100000000000000000007B /* mario */; targetProxy = AB100000000000000000008E; };
+		AB1000000000000000000091 = {isa = PBXTargetDependency; target = AB100000000000000000007F /* mario */; targetProxy = AB1000000000000000000092; };
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		AB1000000000000000000087 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+		AB100000000000000000008B /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -315,7 +323,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			}; name = Debug; };
-		AB1000000000000000000088 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+		AB100000000000000000008C /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -328,7 +336,7 @@
 				SWIFT_VERSION = 5.0;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			}; name = Release; };
-		AB1000000000000000000089 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+		AB100000000000000000008D /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -348,7 +356,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			}; name = Debug; };
-		AB100000000000000000008A /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+		AB100000000000000000008E /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -368,7 +376,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			}; name = Release; };
-		AB100000000000000000008B /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
+		AB100000000000000000008F /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -384,7 +392,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mario.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/mario";
 			}; name = Debug; };
-		AB100000000000000000008C /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
+		AB1000000000000000000090 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -403,10 +411,10 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AB1000000000000000000084 = {isa = XCConfigurationList; buildConfigurations = ( AB1000000000000000000087 /* Debug */, AB1000000000000000000088 /* Release */ ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		AB1000000000000000000085 = {isa = XCConfigurationList; buildConfigurations = ( AB1000000000000000000089 /* Debug */, AB100000000000000000008A /* Release */ ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		AB1000000000000000000086 = {isa = XCConfigurationList; buildConfigurations = ( AB100000000000000000008B /* Debug */, AB100000000000000000008C /* Release */ ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		AB1000000000000000000088 = {isa = XCConfigurationList; buildConfigurations = ( AB100000000000000000008B /* Debug */, AB100000000000000000008C /* Release */ ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		AB1000000000000000000089 = {isa = XCConfigurationList; buildConfigurations = ( AB100000000000000000008D /* Debug */, AB100000000000000000008E /* Release */ ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		AB100000000000000000008A = {isa = XCConfigurationList; buildConfigurations = ( AB100000000000000000008F /* Debug */, AB1000000000000000000090 /* Release */ ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 /* End XCConfigurationList section */
 	};
-	rootObject = AB100000000000000000007D /* Project object */;
+	rootObject = AB1000000000000000000081 /* Project object */;
 }
