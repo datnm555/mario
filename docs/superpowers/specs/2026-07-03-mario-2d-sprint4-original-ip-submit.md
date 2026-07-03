@@ -99,8 +99,8 @@ Vì Sprint 1 đã chọn **rectangle placeholder** (không dùng sprite/tên Nin
 ## 6. Trạng thái triển khai
 
 - [x] Spec viết xong (file này)
-- [ ] Chốt Open Questions (đặc biệt bundle ID, pricing, Game Center giữ/gỡ)
-- [ ] 2.A Code/asset: app icon, bundle id, display name, privacy manifest, (gỡ/bật GameCenter)
+- [x] Chốt Open Questions: icon = Claude vẽ minimal · Game Center = giữ stub (không entitlement, không UI → không nút chết) · pricing = Free · bundle = com.datnm555.supersquare
+- [x] 2.A Code/asset: app icon (ô đỏ + cloud + coin), bundle id `com.datnm555.supersquare`, display name "Super Square", PrivacyInfo.xcprivacy (no data collected). Build + 105 tests pass, launch OK. **Game Center: giữ stub, không thêm UI/entitlement.**
 - [ ] 2.B Apple Developer Program + signing (USER)
 - [ ] 2.C App Store Connect record + metadata + screenshots
 - [ ] 2.D Archive → TestFlight → Submit → Review → Launch

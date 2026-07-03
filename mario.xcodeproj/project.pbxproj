@@ -53,6 +53,7 @@
 		AB1000000000000000000058 = {isa = PBXBuildFile; fileRef = AB1000000000000000000057 /* stomp.wav */; };
 		AB100000000000000000005A = {isa = PBXBuildFile; fileRef = AB1000000000000000000059 /* win.wav */; };
 		AB100000000000000000005C = {isa = PBXBuildFile; fileRef = AB100000000000000000005B /* Assets.xcassets */; };
+		PR1V00000000000000000002 = {isa = PBXBuildFile; fileRef = PR1V00000000000000000001 /* PrivacyInfo.xcprivacy */; };
 		AB100000000000000000005E = {isa = PBXBuildFile; fileRef = AB100000000000000000005D /* InputStateTests.swift */; };
 		AB1000000000000000000060 = {isa = PBXBuildFile; fileRef = AB100000000000000000005F /* LevelLoaderTests.swift */; };
 		AB1000000000000000000062 = {isa = PBXBuildFile; fileRef = AB1000000000000000000061 /* PlayerTests.swift */; };
@@ -119,6 +120,7 @@
 		AB1000000000000000000057 /* stomp.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "stomp.wav"; sourceTree = "<group>"; };
 		AB1000000000000000000059 /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "win.wav"; sourceTree = "<group>"; };
 		AB100000000000000000005B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		PR1V00000000000000000001 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PrivacyInfo.xcprivacy"; sourceTree = "<group>"; };
 		AB100000000000000000005D /* InputStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InputStateTests.swift"; sourceTree = "<group>"; };
 		AB100000000000000000005F /* LevelLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LevelLoaderTests.swift"; sourceTree = "<group>"; };
 		AB1000000000000000000061 /* PlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerTests.swift"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			AB1000000000000000000077 /* Levels */,
 			AB1000000000000000000078 /* Sounds */,
 			AB100000000000000000005B /* Assets.xcassets */,
+			PR1V00000000000000000001 /* PrivacyInfo.xcprivacy */,
 		); path = mario; sourceTree = "<group>"; };
 		AB1000000000000000000073 /* App */ = {isa = PBXGroup; children = (
 			AB1000000000000000000001 /* MarioApp.swift */,
@@ -234,6 +237,7 @@
 /* Begin PBXResourcesBuildPhase section */
 		AB1000000000000000000084 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
 			AB100000000000000000005C /* Assets.xcassets in Resources */,
+			PR1V00000000000000000002 /* PrivacyInfo.xcprivacy in Resources */,
 			AB1000000000000000000040 /* level-1-1.json in Resources */,
 			AB1000000000000000000042 /* level-1-2.json in Resources */,
 			AB1000000000000000000044 /* level-1-3.json in Resources */,
@@ -349,7 +353,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.mario;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datnm555.supersquare;
+				INFOPLIST_KEY_CFBundleDisplayName = "Super Square";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -369,7 +374,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.mario;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datnm555.supersquare;
+				INFOPLIST_KEY_CFBundleDisplayName = "Super Square";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -384,7 +390,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.marioTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datnm555.supersquare.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -400,7 +406,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.marioTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.datnm555.supersquare.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
