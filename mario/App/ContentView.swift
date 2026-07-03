@@ -3,8 +3,8 @@ import SpriteKit
 
 /// SwiftUI wrapper host SKView qua SpriteView.
 struct ContentView: View {
-    private var scene: GameScene {
-        let scene = GameScene(size: GameScene.designSize)
+    private var scene: SKScene {
+        let scene = MenuScene(size: GameConfig.designSize)
         scene.scaleMode = .aspectFill
         return scene
     }

@@ -13,6 +13,9 @@ extension UserDefaults: KeyValueStore {}
 /// Logic thuần → test bằng cách inject `KeyValueStore` giả.
 final class ProgressStore {
 
+    /// Instance dùng chung cho app (UserDefaults thật). Test dùng init inject.
+    static let shared = ProgressStore()
+
     private enum Key {
         static let maxLevelCleared = "progress.maxLevelCleared"
         static let totalCoins = "progress.totalCoins"

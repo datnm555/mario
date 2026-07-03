@@ -9,8 +9,12 @@ private enum GameState {
 final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // Thiết kế theo độ phân giải cố định → aspectFill, độc lập thiết bị.
-    static let designSize = CGSize(width: 1024, height: 576)
-    private let levelName = "level-1-1"
+    static let designSize = GameConfig.designSize
+
+    /// Màn đang chơi (router set trước khi present). Mặc định màn 1.
+    var levelIndex: Int = 1
+    private var levelName: String { GameConfig.levelName(for: levelIndex) }
+    private let progress = ProgressStore.shared
 
     private let cam = SKCameraNode()
     private let touchControls = TouchControls()
@@ -24,6 +28,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private var lives = 3
     private var gameState: GameState = .playing
     private var lastUpdate: TimeInterval = 0
+    private var elapsed: TimeInterval = 0   // thời gian hoàn thành màn (best-time)
 
     // MARK: - Lifecycle
 
@@ -50,6 +55,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         coins = 0
         gameState = .playing
         lastUpdate = 0
+        elapsed = 0
         touchControls.reset()
 
         do {
@@ -103,6 +109,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameState == .playing, player != nil else { return }
         let dt = lastUpdate == 0 ? 0 : currentTime - lastUpdate
         lastUpdate = currentTime
+        elapsed += dt
 
         player.update(input: touchControls.state, dt: dt)
         for e in enemies { e.update(dt: dt) }
@@ -227,8 +234,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             showMessage("Ối! Còn \(lives) mạng", color: .white, autoFade: true)
             run(.sequence([.wait(forDuration: 1.2), .run { [weak self] in self?.startLevel() }]))
         } else {
-            // Hết mạng → chờ chạm để chơi lại (xử lý ở touchesBegan).
-            showMessage("GAME OVER\nChạm để chơi lại", color: SKColor(red: 1, green: 0.4, blue: 0.4, alpha: 1))
+            // Hết mạng → chạm để về chọn màn (xử lý ở touchesBegan).
+            showMessage("GAME OVER\nChạm để về chọn màn", color: SKColor(red: 1, green: 0.4, blue: 0.4, alpha: 1))
         }
     }
 
@@ -236,7 +243,15 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameState == .playing else { return }
         gameState = .won
         player.physicsBody?.velocity = .zero
-        showMessage("YOU WIN! 🎉\nChạm để chơi lại", color: SKColor(red: 0.6, green: 1, blue: 0.6, alpha: 1))
+
+        // Ghi tiến độ: mở màn kế, cộng coin, lưu best-time.
+        progress.markCleared(level: levelIndex)
+        progress.addCoins(coins)
+        progress.recordTime(elapsed, level: levelIndex)
+
+        let timeStr = String(format: "%.1fs", elapsed)
+        showMessage("YOU WIN! 🎉\n⏱ \(timeStr)\nChạm để tiếp tục",
+                    color: SKColor(red: 0.6, green: 1, blue: 0.6, alpha: 1))
     }
 
     // MARK: - Overlay
@@ -265,11 +280,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Touch passthrough → TouchControls
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // Khi đã thắng/thua hết mạng → chạm để restart.
+        // Thắng hoặc hết mạng → chạm để về màn chọn level.
         if gameState == .won || (gameState == .lost && lives <= 0) {
-            clearOverlay()
-            lives = (lives <= 0) ? 3 : lives
-            startLevel()
+            SceneRouter.goLevelSelect(from: self)
             return
         }
         for t in touches {
