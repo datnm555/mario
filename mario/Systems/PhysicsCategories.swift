@@ -12,5 +12,9 @@ enum PhysicsCategory {
     static let hazard:  UInt32 = 1 << 5
     static let powerup: UInt32 = 1 << 6
     static let projectile: UInt32 = 1 << 7
+    static let block:   UInt32 = 1 << 8   // '?' block: solid + đập nhả thưởng
     static let all:    UInt32 = .max
+
+    /// Mọi bề mặt đứng được (đất + block + ống). Dùng cho collisionBitMask.
+    static let solid:  UInt32 = ground | block
 }

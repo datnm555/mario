@@ -31,7 +31,7 @@ final class Fireball: SKSpriteNode {
         body.linearDamping = 0
         body.mass = 0.05
         body.categoryBitMask = PhysicsCategory.projectile
-        body.collisionBitMask = PhysicsCategory.ground
+        body.collisionBitMask = PhysicsCategory.solid
         body.contactTestBitMask = PhysicsCategory.enemy
         body.velocity = CGVector(dx: direction * flySpeed, dy: -50)
         physicsBody = body

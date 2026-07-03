@@ -81,7 +81,7 @@ final class GoombaEnemy: SKSpriteNode, Enemy {
         body.linearDamping = 0
         body.mass = 0.2
         body.categoryBitMask = PhysicsCategory.enemy
-        body.collisionBitMask = PhysicsCategory.ground | PhysicsCategory.enemy
+        body.collisionBitMask = PhysicsCategory.solid | PhysicsCategory.enemy
         body.contactTestBitMask = PhysicsCategory.player | PhysicsCategory.enemy
         physicsBody = body
     }

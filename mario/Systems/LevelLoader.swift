@@ -17,6 +17,12 @@ struct PowerupSpawn: Equatable {
     let position: CGPoint
 }
 
+/// Vị trí + nội dung của 1 block '?'.
+struct BlockSpawn: Equatable {
+    let content: BlockContent
+    let position: CGPoint
+}
+
 /// Kết quả load 1 level: world node chứa tile, + các spawn point cho entity.
 struct LoadedLevel {
     let tilesNode: SKNode
@@ -24,6 +30,7 @@ struct LoadedLevel {
     let enemySpawns: [EnemySpawn]
     let coinSpawns: [CGPoint]
     let powerupSpawns: [PowerupSpawn]
+    let blockSpawns: [BlockSpawn]
     let flagPosition: CGPoint?
     let width: CGFloat
     let height: CGFloat
@@ -78,6 +85,7 @@ enum LevelLoader {
         var enemySpawns: [EnemySpawn] = []
         var coinSpawns: [CGPoint] = []
         var powerupSpawns: [PowerupSpawn] = []
+        var blockSpawns: [BlockSpawn] = []
         var flagPosition: CGPoint?
 
         // Quy đổi (row, col) → world position (SpriteKit y hướng lên).
@@ -94,6 +102,12 @@ enum LevelLoader {
                 switch ch {
                 case "G", "#":
                     tilesNode.addChild(makeSolidTile(at: pos, size: ts, brick: ch == "#"))
+                case "T":
+                    tilesNode.addChild(makePipeTile(at: pos, size: ts))
+                case "?":
+                    blockSpawns.append(BlockSpawn(content: .coin, position: pos))
+                case "U":
+                    blockSpawns.append(BlockSpawn(content: .mushroom, position: pos))
                 case "P":
                     playerSpawn = pos
                 case "E":
@@ -122,6 +136,7 @@ enum LevelLoader {
             enemySpawns: enemySpawns,
             coinSpawns: coinSpawns,
             powerupSpawns: powerupSpawns,
+            blockSpawns: blockSpawns,
             flagPosition: flagPosition,
             width: CGFloat(colCount) * ts,
             height: CGFloat(rowCount) * ts,
@@ -136,6 +151,23 @@ enum LevelLoader {
         let node = SKSpriteNode(color: color, size: CGSize(width: size, height: size))
         node.position = pos
         node.name = "ground"
+        let body = SKPhysicsBody(rectangleOf: node.size)
+        body.isDynamic = false
+        body.friction = 0.2
+        body.restitution = 0
+        body.categoryBitMask = PhysicsCategory.ground
+        body.collisionBitMask = PhysicsCategory.player | PhysicsCategory.enemy
+        body.contactTestBitMask = PhysicsCategory.player
+        node.physicsBody = body
+        return node
+    }
+
+    /// Ống xanh (pipe) — vật cản solid (category ground). Chưa warp (Sprint 2).
+    private static func makePipeTile(at pos: CGPoint, size: CGFloat) -> SKSpriteNode {
+        let node = SKSpriteNode(color: SKColor(red: 0.20, green: 0.62, blue: 0.28, alpha: 1),
+                                size: CGSize(width: size, height: size))
+        node.position = pos
+        node.name = "pipe"
         let body = SKPhysicsBody(rectangleOf: node.size)
         body.isDynamic = false
         body.friction = 0.2

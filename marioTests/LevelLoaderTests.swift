@@ -70,6 +70,16 @@ final class LevelLoaderTests: XCTestCase {
         XCTAssertEqual(lvl.enemySpawns.map(\.kind), [.goomba, .koopa, .flying])
     }
 
+    func testBlocksAndPipesParsed() throws {
+        // ? = coin block, U = mushroom block, T = pipe (solid ground)
+        let data = Data("{ \"name\": \"bp\", \"tileSize\": 10, \"rows\": [\"?U\", \"TT\", \"GG\"] }".utf8)
+        let lvl = try LevelLoader.load(jsonData: data)
+        XCTAssertEqual(lvl.blockSpawns.count, 2)
+        XCTAssertEqual(lvl.blockSpawns.map(\.content), [.coin, .mushroom])
+        // 2 pipe (row1) + 2 ground (row2) đều là solid tile
+        XCTAssertEqual(lvl.tilesNode.children.count, 4)
+    }
+
     func testNoFlagWhenAbsent() throws {
         let data = Data(#"{ "name": "n", "tileSize": 10, "rows": ["P..", "GGG"] }"#.utf8)
         let lvl = try LevelLoader.load(jsonData: data)

@@ -63,10 +63,11 @@ final class Player: SKSpriteNode {
         body.linearDamping = 0
         body.mass = 0.2
         body.categoryBitMask = PhysicsCategory.player
-        body.collisionBitMask = PhysicsCategory.ground
+        body.collisionBitMask = PhysicsCategory.solid
         body.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.coin |
                                   PhysicsCategory.flag | PhysicsCategory.hazard |
-                                  PhysicsCategory.powerup | PhysicsCategory.ground
+                                  PhysicsCategory.powerup | PhysicsCategory.ground |
+                                  PhysicsCategory.block
         physicsBody = body
     }
 

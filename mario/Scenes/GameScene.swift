@@ -24,6 +24,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     private var enemies: [any Enemy] = []
     private var mushrooms: [Mushroom] = []
     private var fireballs: [Fireball] = []
+    private var blocks: [QuestionBlock] = []
     private var wasShootHeld = false
     private var level: LoadedLevel!
 
@@ -57,6 +58,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         enemies.removeAll()
         mushrooms.removeAll()
         fireballs.removeAll()
+        blocks.removeAll()
         wasShootHeld = false
         coins = 0
         gameState = .playing
@@ -98,6 +100,14 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             let c = Coin()
             c.position = spawn
             addChild(c)
+        }
+
+        // Question blocks
+        for spawn in level.blockSpawns {
+            let block = QuestionBlock(content: spawn.content)
+            block.position = spawn.position
+            addChild(block)
+            blocks.append(block)
         }
 
         // Power-ups
@@ -247,6 +257,13 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
 
+        // Player + Block → đập từ dưới nhả thưởng
+        if mask == (PhysicsCategory.player | PhysicsCategory.block) {
+            let node = (a.categoryBitMask == PhysicsCategory.block ? a.node : b.node)
+            bumpBlock(node)
+            return
+        }
+
         // Player + Power-up
         if mask == (PhysicsCategory.player | PhysicsCategory.powerup) {
             let node = (a.categoryBitMask == PhysicsCategory.powerup ? a.node : b.node)
@@ -265,6 +282,38 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         // Player + Hazard → trúng đòn
         if mask == (PhysicsCategory.player | PhysicsCategory.hazard) {
             if player.takeDamage() { playerDied() }
+        }
+    }
+
+    /// Đập block: chỉ khi player ở DƯỚI block và đang đi lên.
+    private func bumpBlock(_ node: SKNode?) {
+        guard let node = node, let block = blocks.first(where: { $0 === node }) else { return }
+        let hitFromBelow = player.position.y < block.position.y &&
+                           (player.physicsBody?.velocity.dy ?? 0) > -1
+        guard hitFromBelow, let content = block.bump() else { return }
+        dispenseReward(content, from: block)
+    }
+
+    private func dispenseReward(_ content: BlockContent, from block: QuestionBlock) {
+        let top = block.position.y + QuestionBlock.bodySize.height / 2
+        switch content {
+        case .coin:
+            coins += 1
+            // Coin bật lên rồi tắt.
+            let pop = SKSpriteNode(color: SKColor(red: 0.98, green: 0.82, blue: 0.18, alpha: 1),
+                                   size: Coin.bodySize)
+            pop.position = CGPoint(x: block.position.x, y: top + 6)
+            pop.zPosition = 12
+            addChild(pop)
+            pop.run(.sequence([
+                .group([.moveBy(x: 0, y: 30, duration: 0.25), .fadeOut(withDuration: 0.25)]),
+                .removeFromParent()
+            ]))
+        case .mushroom:
+            let m = Mushroom()
+            m.position = CGPoint(x: block.position.x, y: top + Mushroom.bodySize.height / 2 + 2)
+            addChild(m)
+            mushrooms.append(m)
         }
     }
 

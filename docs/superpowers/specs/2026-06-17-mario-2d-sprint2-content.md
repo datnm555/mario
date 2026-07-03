@@ -128,7 +128,7 @@ GameScene --hết mạng--> LevelSelectScene
   - [x] Step 2: SceneRouter + MenuScene + LevelSelectScene + GameScene nhận levelIndex/route + 5 màn
   - [x] Step 3: enemy mới (Koopa shell-mechanic + Flying) — Enemy protocol tổng quát, +11 tests
   - [x] Step 4: power-up (Mushroom/FireFlower/Fireball) + Player.PowerState (small/big/fire) — +16 tests
-  - [ ] Step 5: QuestionBlock + Pipe
+  - [x] Step 5: QuestionBlock (đập nhả coin/nấm) + Pipe (vật cản solid, chưa warp) — +5 tests
   - [ ] Step 6: AudioManager (BGM + SFX)
   - [ ] Step 7: ParallaxBackground + AnimationLibrary
   - [ ] Step 8: thiết kế/cân bằng 5 màn
