@@ -37,6 +37,8 @@ final class Player: SKSpriteNode {
 
     /// Hướng nhìn gần nhất (+1 phải, -1 trái) — dùng để bắn fireball.
     private(set) var facing: CGFloat = 1
+    /// True trong frame vừa nhảy (GameScene đọc để phát SFX rồi bỏ qua).
+    private(set) var justJumped = false
     private var invulnTimer: TimeInterval = 0
     private var shootTimer: TimeInterval = 0
     var isInvulnerable: Bool { invulnTimer > 0 }
@@ -74,6 +76,7 @@ final class Player: SKSpriteNode {
     /// Gọi mỗi frame từ GameScene.update.
     func update(input: InputState, dt: TimeInterval) {
         guard !isDead, let body = physicsBody else { return }
+        justJumped = false
 
         // Di chuyển ngang: set velocity.x trực tiếp (control chặt như platformer cổ điển).
         body.velocity.dx = input.horizontal * moveSpeed
@@ -104,6 +107,7 @@ final class Player: SKSpriteNode {
             isOnGround = false
             coyoteTimer = 0
             jumpBufferTimer = 0
+            justJumped = true
         }
 
         // Variable jump height: thả nút khi đang lên → cắt bớt lực nhảy.

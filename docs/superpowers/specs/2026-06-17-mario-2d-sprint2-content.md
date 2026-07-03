@@ -129,7 +129,7 @@ GameScene --hết mạng--> LevelSelectScene
   - [x] Step 3: enemy mới (Koopa shell-mechanic + Flying) — Enemy protocol tổng quát, +11 tests
   - [x] Step 4: power-up (Mushroom/FireFlower/Fireball) + Player.PowerState (small/big/fire) — +16 tests
   - [x] Step 5: QuestionBlock (đập nhả coin/nấm) + Pipe (vật cản solid, chưa warp) — +5 tests
-  - [ ] Step 6: AudioManager (BGM + SFX)
+  - [x] Step 6: AudioManager (BGM loop + 8 SFX, WAV tự sinh bằng code, mute persist) — +6 tests
   - [ ] Step 7: ParallaxBackground + AnimationLibrary
   - [ ] Step 8: thiết kế/cân bằng 5 màn
 - [ ] Test device thật → đóng Sprint 2

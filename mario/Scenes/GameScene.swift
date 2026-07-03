@@ -77,6 +77,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnEntities()
         hud.refresh(coins: coins, lives: lives)
         centerCameraOnPlayer(immediate: true)
+        AudioManager.shared.startBGM()
     }
 
     private func spawnEntities() {
@@ -144,6 +145,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
         let input = touchControls.state
         player.update(input: input, dt: dt)
+        if player.justJumped { AudioManager.shared.play(.jump) }
         for e in enemies { e.update(dt: dt) }
         for m in mushrooms { m.update(dt: dt) }
         for f in fireballs { f.update(dt: dt) }
@@ -158,6 +160,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         let shootEdge = input.shootHeld && !wasShootHeld
         wasShootHeld = input.shootHeld
         guard shootEdge, player.tryShoot() else { return }
+        AudioManager.shared.play(.fireball)
         let ball = Fireball(direction: player.facing)
         ball.position = CGPoint(x: player.position.x + player.facing * (Player.bodySize.width / 2 + 8),
                                 y: player.position.y)
@@ -228,6 +231,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             let coinNode = (a.categoryBitMask == PhysicsCategory.coin ? a.node : b.node) as? Coin
             if let coin = coinNode, coin.collect() {
                 coins += 1
+                AudioManager.shared.play(.coin)
             }
             return
         }
@@ -291,6 +295,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         let hitFromBelow = player.position.y < block.position.y &&
                            (player.physicsBody?.velocity.dy ?? 0) > -1
         guard hitFromBelow, let content = block.bump() else { return }
+        AudioManager.shared.play(.brick)
         dispenseReward(content, from: block)
     }
 
@@ -321,8 +326,10 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         if let m = node as? Mushroom, m.collect() {
             player.grow()
             mushrooms.removeAll { $0 === m }
+            AudioManager.shared.play(.powerup)
         } else if let w = node as? FireFlower, w.collect() {
             player.becomeFire()
+            AudioManager.shared.play(.powerup)
         }
     }
 
@@ -350,6 +357,7 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         let falling = (player.physicsBody?.velocity.dy ?? 0) <= 5
 
         if playerBottom >= enemyTop - 10 && falling {
+            AudioManager.shared.play(.stomp)
             if enemy.onStompFromAbove() { player.bounce() }
         } else {
             let hurts = enemy.onSideContact(playerX: player.position.x)
@@ -377,6 +385,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         player.die()
         lives -= 1
         gameState = .lost
+        AudioManager.shared.stopBGM()
+        AudioManager.shared.play(.death)
 
         if lives > 0 {
             showMessage("Ối! Còn \(lives) mạng", color: .white, autoFade: true)
@@ -391,6 +401,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         guard gameState == .playing else { return }
         gameState = .won
         player.physicsBody?.velocity = .zero
+        AudioManager.shared.stopBGM()
+        AudioManager.shared.play(.win)
 
         // Ghi tiến độ: mở màn kế, cộng coin, lưu best-time.
         progress.markCleared(level: levelIndex)
