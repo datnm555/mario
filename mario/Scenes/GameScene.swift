@@ -22,6 +22,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private var player: Player!
     private var enemies: [any Enemy] = []
+    private var mushrooms: [Mushroom] = []
+    private var fireballs: [Fireball] = []
+    private var wasShootHeld = false
     private var level: LoadedLevel!
 
     private var coins = 0
@@ -52,6 +55,9 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         // Dọn sạch state cũ (cho restart).
         children.filter { $0 != cam }.forEach { $0.removeFromParent() }
         enemies.removeAll()
+        mushrooms.removeAll()
+        fireballs.removeAll()
+        wasShootHeld = false
         coins = 0
         gameState = .playing
         lastUpdate = 0
@@ -94,6 +100,21 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(c)
         }
 
+        // Power-ups
+        for spawn in level.powerupSpawns {
+            switch spawn.kind {
+            case .mushroom:
+                let m = Mushroom()
+                m.position = spawn.position
+                addChild(m)
+                mushrooms.append(m)
+            case .fireFlower:
+                let w = FireFlower()
+                w.position = spawn.position
+                addChild(w)
+            }
+        }
+
         // Flag
         if let flagPos = level.flagPosition {
             let f = Flag()
@@ -111,10 +132,27 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         lastUpdate = currentTime
         elapsed += dt
 
-        player.update(input: touchControls.state, dt: dt)
+        let input = touchControls.state
+        player.update(input: input, dt: dt)
         for e in enemies { e.update(dt: dt) }
+        for m in mushrooms { m.update(dt: dt) }
+        for f in fireballs { f.update(dt: dt) }
+        fireballs.removeAll { $0.isSpent || $0.parent == nil }
 
+        handleShooting(input: input)
         checkFellOffWorld()
+    }
+
+    /// Cạnh lên nút B + player đang fire → bắn 1 fireball theo hướng nhìn.
+    private func handleShooting(input: InputState) {
+        let shootEdge = input.shootHeld && !wasShootHeld
+        wasShootHeld = input.shootHeld
+        guard shootEdge, player.tryShoot() else { return }
+        let ball = Fireball(direction: player.facing)
+        ball.position = CGPoint(x: player.position.x + player.facing * (Player.bodySize.width / 2 + 8),
+                                y: player.position.y)
+        addChild(ball)
+        fireballs.append(ball)
     }
 
     override func didSimulatePhysics() {
@@ -209,9 +247,33 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
             return
         }
 
-        // Player + Hazard → chết
+        // Player + Power-up
+        if mask == (PhysicsCategory.player | PhysicsCategory.powerup) {
+            let node = (a.categoryBitMask == PhysicsCategory.powerup ? a.node : b.node)
+            collectPowerup(node)
+            return
+        }
+
+        // Fireball + Enemy → giết enemy; Fireball + Ground → tắt
+        if mask == (PhysicsCategory.projectile | PhysicsCategory.enemy) {
+            let ballNode = (a.categoryBitMask == PhysicsCategory.projectile ? a.node : b.node)
+            let enemyNode = (a.categoryBitMask == PhysicsCategory.enemy ? a.node : b.node)
+            if let e = enemy(for: enemyNode!), !e.isDead { e.onShellHit(); pruneDeadEnemies() }
+            (ballNode as? Fireball)?.despawn()
+            return
+        }
+        // Player + Hazard → trúng đòn
         if mask == (PhysicsCategory.player | PhysicsCategory.hazard) {
-            playerDied()
+            if player.takeDamage() { playerDied() }
+        }
+    }
+
+    private func collectPowerup(_ node: SKNode?) {
+        if let m = node as? Mushroom, m.collect() {
+            player.grow()
+            mushrooms.removeAll { $0 === m }
+        } else if let w = node as? FireFlower, w.collect() {
+            player.becomeFire()
         }
     }
 
@@ -241,8 +303,8 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         if playerBottom >= enemyTop - 10 && falling {
             if enemy.onStompFromAbove() { player.bounce() }
         } else {
-            let playerDies = enemy.onSideContact(playerX: player.position.x)
-            if playerDies { playerDied() }
+            let hurts = enemy.onSideContact(playerX: player.position.x)
+            if hurts, player.takeDamage() { playerDied() }
         }
         pruneDeadEnemies()
     }

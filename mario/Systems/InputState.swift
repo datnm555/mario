@@ -7,6 +7,8 @@ struct InputState: Equatable {
     var rightPressed = false
     /// True khi nút jump đang được giữ. Player tự detect cạnh lên (rising edge).
     var jumpHeld = false
+    /// True khi nút bắn (B) đang được giữ. GameScene detect cạnh lên để bắn fireball.
+    var shootHeld = false
 
     /// -1 (trái), 0 (đứng yên), +1 (phải). Giữ cả 2 nút → đứng yên.
     var horizontal: CGFloat {

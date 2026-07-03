@@ -6,12 +6,24 @@ struct EnemySpawn: Equatable {
     let position: CGPoint
 }
 
+enum PowerupKind {
+    case mushroom     // 'M'
+    case fireFlower   // 'W'
+}
+
+/// Vị trí + loại của 1 power-up.
+struct PowerupSpawn: Equatable {
+    let kind: PowerupKind
+    let position: CGPoint
+}
+
 /// Kết quả load 1 level: world node chứa tile, + các spawn point cho entity.
 struct LoadedLevel {
     let tilesNode: SKNode
     let playerSpawn: CGPoint
     let enemySpawns: [EnemySpawn]
     let coinSpawns: [CGPoint]
+    let powerupSpawns: [PowerupSpawn]
     let flagPosition: CGPoint?
     let width: CGFloat
     let height: CGFloat
@@ -65,6 +77,7 @@ enum LevelLoader {
         var playerSpawn = CGPoint(x: ts, y: ts * 2)
         var enemySpawns: [EnemySpawn] = []
         var coinSpawns: [CGPoint] = []
+        var powerupSpawns: [PowerupSpawn] = []
         var flagPosition: CGPoint?
 
         // Quy đổi (row, col) → world position (SpriteKit y hướng lên).
@@ -91,6 +104,10 @@ enum LevelLoader {
                     enemySpawns.append(EnemySpawn(kind: .flying, position: pos))
                 case "C":
                     coinSpawns.append(pos)
+                case "M":
+                    powerupSpawns.append(PowerupSpawn(kind: .mushroom, position: pos))
+                case "W":
+                    powerupSpawns.append(PowerupSpawn(kind: .fireFlower, position: pos))
                 case "F":
                     flagPosition = pos
                 default:
@@ -104,6 +121,7 @@ enum LevelLoader {
             playerSpawn: playerSpawn,
             enemySpawns: enemySpawns,
             coinSpawns: coinSpawns,
+            powerupSpawns: powerupSpawns,
             flagPosition: flagPosition,
             width: CGFloat(colCount) * ts,
             height: CGFloat(rowCount) * ts,

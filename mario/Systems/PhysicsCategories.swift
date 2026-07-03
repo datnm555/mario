@@ -8,7 +8,9 @@ enum PhysicsCategory {
     static let enemy:  UInt32 = 1 << 1
     static let ground: UInt32 = 1 << 2
     static let coin:   UInt32 = 1 << 3
-    static let flag:   UInt32 = 1 << 4
-    static let hazard: UInt32 = 1 << 5
+    static let flag:    UInt32 = 1 << 4
+    static let hazard:  UInt32 = 1 << 5
+    static let powerup: UInt32 = 1 << 6
+    static let projectile: UInt32 = 1 << 7
     static let all:    UInt32 = .max
 }

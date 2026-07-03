@@ -10,6 +10,7 @@ final class TouchControls: SKNode {
     private var leftButton: SKShapeNode!
     private var rightButton: SKShapeNode!
     private var jumpButton: SKShapeNode!
+    private var fireButton: SKShapeNode!
 
     /// touch (identity) → tên nút đang giữ.
     private var activeTouches: [ObjectIdentifier: String] = [:]
@@ -38,6 +39,13 @@ final class TouchControls: SKNode {
         jumpButton.position = CGPoint(x: halfW - margin - r - 8, y: -halfH + margin + r)
         jumpButton.name = "jump"
         addChild(jumpButton)
+
+        // Nút bắn (B) — nhỏ hơn, đặt trái nút A, chéo lên trên.
+        fireButton = makeButton(radius: r - 6, label: "B")
+        fireButton.position = CGPoint(x: halfW - margin - r * 3 - 6, y: -halfH + margin + r + 40)
+        fireButton.name = "fire"
+        fireButton.fillColor = SKColor(red: 0.9, green: 0.5, blue: 0.2, alpha: buttonAlpha)
+        addChild(fireButton)
     }
 
     private func makeButton(radius: CGFloat, label: String) -> SKShapeNode {
@@ -94,7 +102,7 @@ final class TouchControls: SKNode {
 
     func reset() {
         activeTouches.removeAll()
-        for n in ["left", "right", "jump"] { highlight(n, on: false) }
+        for n in ["left", "right", "jump", "fire"] { highlight(n, on: false) }
         recompute()
     }
 
@@ -102,18 +110,22 @@ final class TouchControls: SKNode {
 
     private func hitButton(at scenePoint: CGPoint) -> String? {
         // Hit area = vòng tròn bán kính nới rộng cho dễ chạm trên iPad.
-        for button in [leftButton, rightButton, jumpButton] {
+        for button in [leftButton, rightButton, jumpButton, fireButton] {
             guard let b = button else { continue }
             let p = b.convert(scenePoint, from: scene!)
-            let radius = (b == jumpButton ? 60.0 : 52.0) + 16 // pad hit area
-            if hypot(p.x, p.y) <= radius { return b.name }
+            let baseRadius: CGFloat = (b == jumpButton) ? 60 : (b == fireButton ? 46 : 52)
+            if hypot(p.x, p.y) <= baseRadius + 16 { return b.name } // pad hit area
         }
         return nil
     }
 
     private func highlight(_ name: String, on: Bool) {
-        let node = button(named: name)
-        node?.fillColor = SKColor.white.withAlphaComponent(on ? 0.55 : buttonAlpha)
+        guard let node = button(named: name) else { return }
+        if name == "fire" {
+            node.fillColor = SKColor(red: 0.9, green: 0.5, blue: 0.2, alpha: on ? 0.6 : buttonAlpha)
+        } else {
+            node.fillColor = SKColor.white.withAlphaComponent(on ? 0.55 : buttonAlpha)
+        }
     }
 
     private func button(named name: String) -> SKShapeNode? {
@@ -121,6 +133,7 @@ final class TouchControls: SKNode {
         case "left":  return leftButton
         case "right": return rightButton
         case "jump":  return jumpButton
+        case "fire":  return fireButton
         default:      return nil
         }
     }
@@ -130,5 +143,6 @@ final class TouchControls: SKNode {
         state.leftPressed = names.contains("left")
         state.rightPressed = names.contains("right")
         state.jumpHeld = names.contains("jump")
+        state.shootHeld = names.contains("fire")
     }
 }

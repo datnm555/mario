@@ -4,6 +4,11 @@ enum PlayerState {
     case idle, running, jumping, falling, dead
 }
 
+/// Cấp sức mạnh: small (cơ bản) → big (chịu 1 đòn) → fire (bắn được).
+enum PowerState {
+    case small, big, fire
+}
+
 /// Player: placeholder rectangle đỏ + physicsBody + state machine.
 /// Đọc InputState → áp velocity. Animation/màu theo state.
 final class Player: SKSpriteNode {
@@ -19,12 +24,23 @@ final class Player: SKSpriteNode {
     /// Bấm nhảy sớm trước khi chạm đất vẫn được ghi nhận (jump buffering).
     private let jumpBufferTime: TimeInterval = 0.12
 
+    private let invulnDuration: TimeInterval = 1.2
+    private let shootCooldownDuration: TimeInterval = 0.4
+
     private(set) var state: PlayerState = .idle
+    private(set) var power: PowerState = .small
     var isOnGround = false
     private var wasJumpHeld = false
     private(set) var isDead = false
     private var coyoteTimer: TimeInterval = 0
     private var jumpBufferTimer: TimeInterval = 0
+
+    /// Hướng nhìn gần nhất (+1 phải, -1 trái) — dùng để bắn fireball.
+    private(set) var facing: CGFloat = 1
+    private var invulnTimer: TimeInterval = 0
+    private var shootTimer: TimeInterval = 0
+    var isInvulnerable: Bool { invulnTimer > 0 }
+    var canShoot: Bool { power == .fire }
 
     static let bodySize = CGSize(width: 28, height: 30)
 
@@ -50,7 +66,7 @@ final class Player: SKSpriteNode {
         body.collisionBitMask = PhysicsCategory.ground
         body.contactTestBitMask = PhysicsCategory.enemy | PhysicsCategory.coin |
                                   PhysicsCategory.flag | PhysicsCategory.hazard |
-                                  PhysicsCategory.ground
+                                  PhysicsCategory.powerup | PhysicsCategory.ground
         physicsBody = body
     }
 
@@ -60,6 +76,11 @@ final class Player: SKSpriteNode {
 
         // Di chuyển ngang: set velocity.x trực tiếp (control chặt như platformer cổ điển).
         body.velocity.dx = input.horizontal * moveSpeed
+        if input.horizontal != 0 { facing = input.horizontal > 0 ? 1 : -1 }
+
+        // Đếm ngược các timer.
+        if invulnTimer > 0 { invulnTimer = max(0, invulnTimer - dt) }
+        if shootTimer > 0 { shootTimer = max(0, shootTimer - dt) }
 
         // Đếm ngược coyote time: nạp đầy khi đứng đất, cạn dần khi trên không.
         if isOnGround {
@@ -114,14 +135,70 @@ final class Player: SKSpriteNode {
     }
 
     private func applyStateAppearance() {
-        // Placeholder: đổi sắc thái theo state (thay = animation thật sau).
-        switch state {
-        case .idle:     color = SKColor(red: 0.86, green: 0.20, blue: 0.18, alpha: 1)
-        case .running:  color = SKColor(red: 0.92, green: 0.30, blue: 0.22, alpha: 1)
-        case .jumping:  color = SKColor(red: 0.98, green: 0.45, blue: 0.25, alpha: 1)
-        case .falling:  color = SKColor(red: 0.70, green: 0.18, blue: 0.18, alpha: 1)
-        case .dead:     color = SKColor(red: 0.35, green: 0.35, blue: 0.40, alpha: 1)
+        // Placeholder: màu theo cấp sức mạnh (dead ưu tiên). Thay = animation thật sau.
+        if state == .dead {
+            color = SKColor(red: 0.35, green: 0.35, blue: 0.40, alpha: 1)
+        } else {
+            applyPowerAppearance()
         }
+    }
+
+    private func applyPowerAppearance() {
+        guard !isDead else { return }
+        switch power {
+        case .small: color = SKColor(red: 0.86, green: 0.20, blue: 0.18, alpha: 1) // đỏ
+        case .big:   color = SKColor(red: 0.20, green: 0.70, blue: 0.55, alpha: 1) // xanh ngọc
+        case .fire:  color = SKColor(red: 0.98, green: 0.95, blue: 0.90, alpha: 1) // trắng
+        }
+    }
+
+    // MARK: - Power-ups
+
+    /// Nấm: small → big. Đã big/fire thì giữ nguyên (chỉ tính điểm sau).
+    func grow() {
+        guard !isDead else { return }
+        if power == .small {
+            power = .big
+            applyPowerAppearance()
+        }
+    }
+
+    /// Hoa lửa: lên thẳng fire.
+    func becomeFire() {
+        guard !isDead else { return }
+        power = .fire
+        applyPowerAppearance()
+    }
+
+    /// Trúng đòn. Trả về true nếu CHÍ MẠNG (small → chết); false nếu chỉ xuống cấp.
+    /// Đang bất tử (vừa trúng đòn) → bỏ qua.
+    func takeDamage() -> Bool {
+        guard !isDead, !isInvulnerable else { return false }
+        switch power {
+        case .fire:
+            power = .big; startInvulnerability(); return false
+        case .big:
+            power = .small; startInvulnerability(); return false
+        case .small:
+            return true
+        }
+    }
+
+    private func startInvulnerability() {
+        invulnTimer = invulnDuration
+        applyPowerAppearance()
+        removeAction(forKey: "invuln")
+        let blink = SKAction.sequence([.fadeAlpha(to: 0.35, duration: 0.1),
+                                       .fadeAlpha(to: 1.0, duration: 0.1)])
+        run(.sequence([.repeat(blink, count: Int(invulnDuration / 0.2)),
+                       .fadeAlpha(to: 1.0, duration: 0)]), withKey: "invuln")
+    }
+
+    /// Thử bắn: chỉ khi đang fire + hết cooldown. Trả về true nếu được bắn.
+    func tryShoot() -> Bool {
+        guard !isDead, power == .fire, shootTimer <= 0 else { return false }
+        shootTimer = shootCooldownDuration
+        return true
     }
 
     /// Bật nhẹ lên sau khi stomp enemy.
