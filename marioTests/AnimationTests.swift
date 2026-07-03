@@ -47,3 +47,24 @@ final class ParallaxBackgroundTests: XCTestCase {
         XCTAssertLessThan(abs(x), 1000, "Vị trí lớp wrap trong biên spacing")
     }
 }
+
+final class ButtonNodeTests: XCTestCase {
+
+    func testAccessibilityLabelSet() {
+        let b = ButtonNode(id: "play", text: "Chơi", size: CGSize(width: 100, height: 40))
+        XCTAssertTrue(b.isAccessibilityElement)
+        XCTAssertEqual(b.accessibilityLabel, "Chơi")
+    }
+
+    func testSetTextUpdatesAccessibility() {
+        let b = ButtonNode(id: "x", text: "A", size: CGSize(width: 100, height: 40))
+        b.setText("B")
+        XCTAssertEqual(b.accessibilityLabel, "B")
+    }
+
+    func testDisabledButtonNotTappable() {
+        let b = ButtonNode(id: "x", text: "A", size: CGSize(width: 100, height: 40))
+        b.setEnabled(false)
+        XCTAssertFalse(b.isEnabled)
+    }
+}

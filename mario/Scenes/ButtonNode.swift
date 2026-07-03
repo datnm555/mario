@@ -25,6 +25,11 @@ final class ButtonNode: SKNode {
         name = "button:\(id)"
         addChild(background)
         addChild(label)
+
+        // Accessibility: VoiceOver đọc nhãn nút.
+        isAccessibilityElement = true
+        accessibilityLabel = text
+        accessibilityTraits = .button
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) not used") }
@@ -34,7 +39,10 @@ final class ButtonNode: SKNode {
         alpha = enabled ? 1.0 : 0.4
     }
 
-    func setText(_ text: String) { label.text = text }
+    func setText(_ text: String) {
+        label.text = text
+        accessibilityLabel = text
+    }
 
     /// Nhấp nháy nhẹ khi bấm.
     func flash() {

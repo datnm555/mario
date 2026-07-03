@@ -1,7 +1,7 @@
 import SpriteKit
 
 private enum GameState {
-    case playing, won, lost
+    case playing, won, lost, paused
 }
 
 /// Scene chính: sở hữu world + player + enemies + camera. Gọi systems mỗi tick.
@@ -51,8 +51,17 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
         parallax.setup(designSize: GameScene.designSize)
         hud.setup(designSize: GameScene.designSize)
         touchControls.setup(designSize: GameScene.designSize)
+        setupPauseButton()
 
         startLevel()
+    }
+
+    private func setupPauseButton() {
+        let pause = ButtonNode(id: "pause", text: "II", size: CGSize(width: 52, height: 44),
+                               fill: SKColor(white: 0.1, alpha: 0.45))
+        pause.position = CGPoint(x: 0, y: GameScene.designSize.height / 2 - 34)
+        pause.zPosition = 1500
+        cam.addChild(pause)
     }
 
     private func startLevel() {
@@ -423,6 +432,52 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
                     color: SKColor(red: 0.6, green: 1, blue: 0.6, alpha: 1))
     }
 
+    // MARK: - Pause
+
+    private func pauseGame() {
+        guard gameState == .playing else { return }
+        gameState = .paused
+        physicsWorld.speed = 0
+        touchControls.reset()
+        AudioManager.shared.stopBGM()
+        showPauseOverlay()
+    }
+
+    private func resumeGame() {
+        guard gameState == .paused else { return }
+        cam.childNode(withName: "pauseOverlay")?.removeFromParent()
+        physicsWorld.speed = 1
+        gameState = .playing
+        lastUpdate = 0
+        touchControls.reset()
+        AudioManager.shared.startBGM()
+    }
+
+    private func showPauseOverlay() {
+        let overlay = SKNode()
+        overlay.name = "pauseOverlay"
+        overlay.zPosition = 2000
+
+        let dim = SKSpriteNode(color: SKColor(white: 0, alpha: 0.55), size: GameScene.designSize)
+        overlay.addChild(dim)
+
+        let title = SKLabelNode(fontNamed: "AvenirNext-Heavy")
+        title.text = "TẠM DỪNG"
+        title.fontSize = 40
+        title.fontColor = .white
+        title.position = CGPoint(x: 0, y: 150)
+        overlay.addChild(title)
+
+        let items = [("resume", "▶ Tiếp tục"), ("restart", "↻ Chơi lại"),
+                     ("settings", "⚙ Cài đặt"), ("menu", "≡ Về Menu")]
+        for (i, item) in items.enumerated() {
+            let b = ButtonNode(id: "pause_\(item.0)", text: item.1, size: CGSize(width: 300, height: 54))
+            b.position = CGPoint(x: 0, y: 70 - CGFloat(i) * 66)
+            overlay.addChild(b)
+        }
+        cam.addChild(overlay)
+    }
+
     // MARK: - Overlay
 
     private func showMessage(_ text: String, color: SKColor, autoFade: Bool = false) {
@@ -449,17 +504,49 @@ final class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - Touch passthrough → TouchControls
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let first = touches.first else { return }
+
+        // Đang tạm dừng → xử lý nút trong overlay.
+        if gameState == .paused {
+            handlePauseTap(at: first.location(in: self))
+            return
+        }
+
         // Thắng hoặc hết mạng → chạm để về màn chọn level.
         if gameState == .won || (gameState == .lost && lives <= 0) {
             SceneRouter.goLevelSelect(from: self)
             return
         }
+
+        // Bấm nút Pause?
+        if gameState == .playing,
+           let button = tappedButton(at: first.location(in: self)), button.id == "pause" {
+            button.flash()
+            HapticManager.shared.play(.selection)
+            pauseGame()
+            return
+        }
+
         for t in touches {
             touchControls.touchDown(t, scenePoint: t.location(in: self))
         }
     }
 
+    private func handlePauseTap(at point: CGPoint) {
+        guard let button = tappedButton(at: point) else { return }
+        button.flash()
+        HapticManager.shared.play(.selection)
+        switch button.id {
+        case "pause_resume":   resumeGame()
+        case "pause_restart":  resumeGame(); startLevel()
+        case "pause_settings": SceneRouter.goSettings(from: self)
+        case "pause_menu":     SceneRouter.goMenu(from: self)
+        default:               break
+        }
+    }
+
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard gameState == .playing else { return }
         for t in touches {
             touchControls.touchMoved(t, scenePoint: t.location(in: self))
         }

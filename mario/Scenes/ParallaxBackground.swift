@@ -1,4 +1,5 @@
 import SpriteKit
+import UIKit
 
 /// Nền cuộn nhiều lớp (parallax). Là child của camera → luôn phủ màn hình;
 /// cuộn nội dung theo cameraX với hệ số khác nhau tạo chiều sâu.
@@ -65,6 +66,8 @@ final class ParallaxBackground: SKNode {
 
     /// Gọi mỗi frame với vị trí camera để cuộn.
     func update(cameraX: CGFloat) {
+        // Reduce Motion: giữ nền tĩnh cho người nhạy cảm chuyển động.
+        if UIAccessibility.isReduceMotionEnabled { return }
         for layer in layers {
             let offset = (cameraX * layer.factor).truncatingRemainder(dividingBy: layer.spacing)
             layer.node.position.x = -offset

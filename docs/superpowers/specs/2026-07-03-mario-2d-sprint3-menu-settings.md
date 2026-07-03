@@ -114,8 +114,8 @@ mario/
   - [x] Step 1: SettingsStore + SettingsScene (audio/bgm/sfx, cỡ nút, tay thuận, rung) — +8 tests
   - [x] Step 3: HapticManager + cắm 6 event trong GameScene + menu
   - [x] Step 4: Control scale + left-handed áp vào TouchControls (đọc SettingsStore)
-  - [ ] Step 2: Pause menu (Resume/Restart/Settings/Quit)
-  - [ ] Step 5: Accessibility (VoiceOver labels, reduce motion)
+  - [x] Step 2: Pause menu (nút II → overlay Resume/Restart/Settings/Menu, freeze physics)
+  - [x] Step 5: Accessibility (VoiceOver label cho ButtonNode + reduce motion cho parallax) — +3 tests
   - [ ] Step 6: (optional) GameCenterManager stub/thật
 - [ ] Test device thật → đóng Sprint 3
 - [ ] Sprint 3 done → mở Sprint 4 (original IP + submit App Store)
